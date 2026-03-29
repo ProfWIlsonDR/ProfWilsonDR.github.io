@@ -158,6 +158,21 @@
             user-select: none;
         }
 
+        
+        #o5-clearance-data {
+            display: none; 
+            margin: 20px 0;
+            padding-top: 20px;
+            border-top: 2px dashed #c00;
+            font-size: 13px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        #o5-clearance-data strong {
+            color: #c00;
+        }
+
         .social-links { 
             display: flex; 
             flex-direction: column; 
@@ -206,14 +221,14 @@
 
     <div id="main-content">
         <div class="document-card">
-            <div class="classified-stamp">LEVEL 4</div>
+            <div class="classified-stamp" id="clearance-stamp">LEVEL 4</div>
             
             <div class="doc-header">
                 <h1>DR. JASON STEVAN LAY</h1>
                 <p>LEAD RESEARCHER | APPLIED METAPHYSICS</p>
             </div>
 
-            <img src="https://ibb.co.com/GvT02BPh" alt="Personnel Photo" class="profile-pic">
+            <img src="https://i.ibb.co.com/mC8Gq1zx/18095880619613418.jpg" alt="Personnel Photo" class="profile-pic">
             
             <div class="data-field"><strong>CLEARANCE:</strong> Level 4</div>
             <div class="data-field"><strong>LOCATION:</strong> East Jakarta Sector</div>
@@ -221,6 +236,10 @@
             <p class="bio-text">
                 <strong>PROFILE:</strong> Jason's primary directive involves the excavation and containment of anomalous subterranean transit networks within the digital Euclidean space "The Zone". When not conducting high-velocity tactical ballistic simulations (Airsoft), personnel operates strictly monitored high-frequency RF transmission equipment (ORARI Callsign: YD0AAI) to intercept atmospheric anomalies. To prevent total psychological collapse during these operations, personnel is strictly tethered to a Class-A biological feline monitor (Designation: Matjupri; Grey Tabby; Green Eyes).
             </p>
+
+            <div id="o5-clearance-data">
+                <strong>ADDENDUM [O5-COMMAND ONLY]:</strong> Subject exhibits obsessive psychological fixation on simulated irradiated exclusion zones (S.T.A.L.K.E.R. protocol) and bio-organic weapon containment failure scenarios (Resident Evil protocol). Do not engage subject on these topics unless properly armed and briefed.
+            </div>
 
             <div class="social-links">
                 <a href="https://github.com/ProfWilsonDR" class="social-btn" target="_blank">
@@ -240,12 +259,21 @@
         const passkeyInput = document.getElementById('passkey');
         const authScreen = document.getElementById('auth-screen');
         const mainContent = document.getElementById('main-content');
+        const o5Data = document.getElementById('o5-clearance-data');
+        const stamp = document.getElementById('clearance-stamp');
 
         passkeyInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                const inputVal = this.value.trim();
+                
+                const inputVal = this.value.trim().toUpperCase();
                 
                 if (inputVal !== '') {
+                    
+                    if (inputVal === 'O-5' || inputVal === 'O5') {
+                        o5Data.style.display = 'block';
+                        stamp.innerText = 'O5 ONLY';
+                    }
+
                     this.value = 'CREDENTIALS ACCEPTED. DECRYPTING...';
                     this.disabled = true;
                     this.style.color = '#00ff00';
