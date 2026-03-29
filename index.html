@@ -8,7 +8,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; }
 
-        /* --- CRT SCANLINE EFFECT --- */
+       
         body::before {
             content: " ";
             display: block;
@@ -40,7 +40,7 @@
             justify-content: center;
             align-items: center;
             z-index: 999;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.5s ease, background-color 0.2s ease;
         }
 
         .auth-container {
@@ -50,7 +50,7 @@
             padding: 30px;
             background: #0a0a0a;
             box-shadow: 0 0 15px rgba(255, 0, 0, 0.1);
-            animation: flicker 0.15s infinite; /* Subtle terminal flicker */
+            animation: flicker 0.15s infinite;
         }
 
         @keyframes flicker {
@@ -82,6 +82,7 @@
         .classified-stamp {
             position: absolute; top: 20px; right: 20px; color: #c00; border: 2px solid #c00;
             padding: 5px 10px; font-weight: bold; font-size: 18px; transform: rotate(15deg); opacity: 0.8;
+            transition: all 0.3s ease;
         }
 
         .profile-pic { width: 140px; height: 140px; border: 3px solid #111; object-fit: cover; margin: 0 auto 20px; display: block; filter: grayscale(100%) contrast(1.5); }
@@ -90,12 +91,27 @@
 
         .bio-text { font-size: 13px; line-height: 1.6; margin: 20px 0; text-align: justify; border-left: 3px solid #111; padding-left: 15px; }
 
-        /* --- CLICKABLE REDACTION --- */
+        
         .redacted {
-            background-color: #111; color: #111; padding: 0 5px; cursor: pointer; transition: background 0.3s;
+            background-color: #111; color: #111; padding: 0 5px; cursor: pointer; 
+            transition: background 0.3s;
+            user-select: none;
         }
         .redacted:hover { background-color: #444; }
-        .redacted.revealed { background-color: transparent; color: inherit; cursor: default; }
+
+        @keyframes digital-glitch {
+            0% { background-color: #111; color: #111; transform: translate(0); }
+            20% { background-color: #c00; color: #fff; transform: translate(-2px, 1px); }
+            40% { background-color: #fff; color: #000; transform: translate(2px, -1px); }
+            60% { background-color: #111; color: #111; transform: translate(-1px, 2px); }
+            80% { background-color: #c00; color: #fff; transform: translate(1px, -2px); }
+            100% { background-color: transparent; color: inherit; transform: translate(0); }
+        }
+
+        .redacted.revealed {
+            animation: digital-glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            cursor: default;
+        }
 
         #o5-clearance-data { display: none; margin: 20px 0; padding-top: 20px; border-top: 2px dashed #c00; font-size: 13px; line-height: 1.6; }
         #o5-clearance-data strong { color: #c00; }
@@ -108,7 +124,7 @@
         }
         .social-btn:hover { background-color: #111; color: #fff; }
 
-        /* --- LIVE SITE CLOCK --- */
+        
         #site-clock {
             position: fixed; bottom: 10px; right: 10px; font-size: 10px; color: #555; letter-spacing: 1px; z-index: 1001;
         }
@@ -149,7 +165,8 @@
             </p>
 
             <div id="o5-clearance-data">
-                <strong>ADDENDUM [O5-COMMAND]:</strong> Subject exhibits obsessive psychological fixation on simulated irradiated exclusion zones <span class="redacted" onclick="this.classList.add('revealed')">(S.T.A.L.K.E.R.)</span> and bio-organic failure scenarios <span class="redacted" onclick="this.classList.add('revealed')">(Resident Evil)</span>. 
+                <strong>ADDENDUM [O5-COMMAND] - PSYCHOLOGICAL PROFILE:</strong> Subject exhibits an obsessive, potentially memetic fixation on simulated irradiated exclusion zones <span class="redacted" onclick="this.classList.add('revealed')">(S.T.A.L.K.E.R.)</span> and bio-organic catastrophic failure scenarios <span class="redacted" onclick="this.classList.add('revealed')">(Resident Evil)</span>. Cognitive screening is required bi-monthly.<br><br>
+                <strong>INCIDENT LOG 88-ALPHA:</strong> Strict visual observation of the Class-A biological unit <em>Matjupri</em> is mandated. Security feeds indicate the entity's green eyes frequently reflect unmapped, non-Euclidean geometries during the subject's high-frequency RF broadcasts. Personnel are advised not to initiate direct eye contact with the unit during active transmission windows.
             </div>
 
             <div class="social-links">
@@ -173,31 +190,53 @@
         const o5Data = document.getElementById('o5-clearance-data');
         const stamp = document.getElementById('clearance-stamp');
 
-        // Site Clock Logic
+        
         setInterval(() => {
             const now = new Date();
             document.getElementById('site-clock').innerText = "SITE-ID-TIME: " + now.toLocaleTimeString();
         }, 1000);
 
+        
+        const docElements = document.querySelectorAll('.document-card > *');
+        docElements.forEach(el => el.style.opacity = '0');
+
         passkeyInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 const inputVal = this.value.trim().toUpperCase();
                 if (inputVal !== '') {
+                    
+                    
                     if (inputVal === 'O-5' || inputVal === 'O5') {
                         o5Data.style.display = 'block';
                         stamp.innerText = 'O5 ONLY';
+                        stamp.style.color = '#fff';
+                        stamp.style.borderColor = '#fff';
+                        stamp.style.background = '#c00';
                     }
-                    this.value = 'CREDENTIALS ACCEPTED. DECRYPTING...';
+
+                    
+                    this.value = 'AUTHORIZATION ACCEPTED. DECRYPTING...';
                     this.disabled = true;
                     this.style.color = '#00ff00';
+                    
                     setTimeout(() => {
                         authScreen.style.opacity = '0';
+                        
                         setTimeout(() => {
                             authScreen.style.display = 'none';
                             mainContent.style.display = 'block';
-                            setTimeout(() => { mainContent.style.opacity = '1'; }, 50);
+                            mainContent.style.opacity = '1';
+                            
+                            
+                            docElements.forEach((el, index) => {
+                                setTimeout(() => {
+                                    el.style.transition = 'opacity 0.1s ease-in';
+                                    el.style.opacity = '1';
+                                }, 300 + (index * 250)); 
+                            });
+
                         }, 500);
-                    }, 1000);
+                    }, 1200);
                 }
             }
         });
