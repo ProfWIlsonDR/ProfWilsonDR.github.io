@@ -8,7 +8,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; }
 
-       
+     
         body::before {
             content: " ";
             display: block;
@@ -20,60 +20,34 @@
             pointer-events: none;
         }
 
-       
+    
         .scanline {
-            width: 100%;
-            height: 100px;
-            z-index: 9999;
-            position: fixed;
-            pointer-events: none;
+            width: 100%; height: 100px; z-index: 9999; position: fixed; pointer-events: none;
             background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(200,200,200,0.1) 50%, rgba(0,0,0,0) 100%);
             animation: scan 6s linear infinite;
         }
 
-        @keyframes scan {
-            0% { top: -100px; }
-            100% { top: 100vh; }
-        }
+        @keyframes scan { 0% { top: -100px; } 100% { top: 100vh; } }
 
         body {
-            background-color: #050505;
-            color: #d4d4d4;
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-            padding: 20px;
-            overflow-y: auto;
+            background-color: #050505; color: #d4d4d4; display: flex; justify-content: center; 
+            align-items: center; min-height: 100vh; padding: 20px; overflow-y: auto;
         }
 
         #auth-screen {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #050505;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #050505; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 999;
             transition: opacity 0.5s ease, background-color 0.2s ease;
         }
 
         .auth-container {
-            width: 90%;
-            max-width: 600px;
-            border: 1px solid #333;
-            padding: 30px;
-            background: #0a0a0a;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.1);
+            width: 90%; max-width: 600px; border: 1px solid #333; padding: 30px;
+            background: #0a0a0a; box-shadow: 0 0 15px rgba(255, 0, 0, 0.1);
             animation: flicker 0.15s infinite;
         }
 
-        @keyframes flicker {
-            0% { opacity: 0.97; }
-            50% { opacity: 1; }
-            100% { opacity: 0.98; }
-        }
+        @keyframes flicker { 0% { opacity: 0.97; } 50% { opacity: 1; } 100% { opacity: 0.98; } }
 
         .scp-logo-text { text-align: center; font-weight: bold; font-size: 20px; margin-bottom: 20px; letter-spacing: 2px; color: #fff; }
         .warning-text { color: #ff3333; font-weight: bold; text-align: center; margin-bottom: 30px; text-transform: uppercase; }
@@ -101,18 +75,17 @@
             transition: all 0.3s ease;
         }
 
-        .profile-pic { width: 140px; height: 140px; border: 3px solid #111; object-fit: cover; margin: 0 auto 20px; display: block; filter: grayscale(100%) contrast(1.5); }
+        .profile-pic { 
+            width: 140px; height: 140px; border: 3px solid #111; object-fit: cover; 
+            margin: 0 auto 20px; display: block; filter: grayscale(100%) contrast(1.5); 
+            cursor: crosshair; transition: filter 0.1s;
+        }
         .data-field { margin-bottom: 10px; font-size: 14px; }
         .data-field strong { background: #111; color: #fff; padding: 2px 6px; margin-right: 8px;}
 
         .bio-text { font-size: 13px; line-height: 1.6; margin: 20px 0; text-align: justify; border-left: 3px solid #111; padding-left: 15px; }
 
-        
-        .redacted {
-            background-color: #111; color: #111; padding: 0 5px; cursor: pointer; 
-            transition: background 0.3s;
-            user-select: none;
-        }
+        .redacted { background-color: #111; color: #111; padding: 0 5px; cursor: pointer; transition: background 0.3s; user-select: none; }
         .redacted:hover { background-color: #444; }
 
         @keyframes digital-glitch {
@@ -124,29 +97,44 @@
             100% { background-color: transparent; color: inherit; transform: translate(0); }
         }
 
-        .redacted.revealed {
-            animation: digital-glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-            cursor: default;
-        }
+        .redacted.revealed { animation: digital-glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; cursor: default; }
 
         #o5-clearance-data { display: none; margin: 20px 0; padding-top: 20px; border-top: 2px dashed #c00; font-size: 13px; line-height: 1.6; }
         #o5-clearance-data strong { color: #c00; }
 
         .social-links { display: flex; flex-direction: column; gap: 10px; margin-top: 25px; border-top: 1px dashed #111; padding-top: 20px; }
-        .social-btn {
-            display: flex; align-items: center; background-color: #fff; color: #111; 
-            text-decoration: none; padding: 12px; border: 1px solid #111; font-weight: bold; 
-            font-size: 13px; text-transform: uppercase; transition: all 0.2s ease;
-        }
+        .social-btn { display: flex; align-items: center; background-color: #fff; color: #111; text-decoration: none; padding: 12px; border: 1px solid #111; font-weight: bold; font-size: 13px; text-transform: uppercase; transition: all 0.2s ease; }
         .social-btn:hover { background-color: #111; color: #fff; }
 
+        #site-clock { position: fixed; bottom: 10px; right: 10px; font-size: 10px; color: #555; letter-spacing: 1px; z-index: 1001; }
+
       
-        #site-clock {
-            position: fixed; bottom: 10px; right: 10px; font-size: 10px; color: #555; letter-spacing: 1px; z-index: 1001;
+        #memetic-kill {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-radial-gradient(circle, #000, #000 15px, #fff 15px, #fff 30px);
+            z-index: 10000; justify-content: center; align-items: center; flex-direction: column;
+            animation: spin-strobe 0.15s linear infinite;
+        }
+        .memetic-text { 
+            background: #000; color: #f00; padding: 20px 40px; font-size: 2.5rem; 
+            border: 5px solid #f00; font-weight: bold; text-align: center; text-transform: uppercase;
+            box-shadow: 0 0 50px #f00;
+        }
+        @keyframes spin-strobe {
+            0% { filter: invert(0) hue-rotate(0deg); transform: scale(1); }
+            50% { filter: invert(1) hue-rotate(180deg); transform: scale(1.05); }
+            100% { filter: invert(0) hue-rotate(360deg); transform: scale(1); }
         }
     </style>
 </head>
 <body>
+
+    <div id="memetic-kill">
+        <div class="memetic-text">
+            MEMETIC KILL AGENT ACTIVATED<br>
+            <span style="font-size: 1.5rem; color: #fff;">CARDIAC ARREST IMMINENT</span>
+        </div>
+    </div>
 
     <div class="scanline"></div>
     <div id="site-clock">SITE-ID-TIME: --:--:--</div>
@@ -172,7 +160,7 @@
                 <p>SOFTWARE ARCHITECT | SECTOR RESEARCHER</p>
             </div>
 
-            <img src="https://i.ibb.co.com/mC8Gq1zx/18095880619613418.jpg" alt="Personnel Photo" class="profile-pic">
+            <img src="https://i.ibb.co.com/mC8Gq1zx/18095880619613418.jpg" alt="Personnel Photo" class="profile-pic" id="profile-img">
             
             <div class="data-field"><strong>CLEARANCE:</strong> Level 4</div>
             <div class="data-field"><strong>CALLSIGN:</strong> YD0AAI</div>
@@ -205,54 +193,107 @@
         const mainContent = document.getElementById('main-content');
         const o5Data = document.getElementById('o5-clearance-data');
         const stamp = document.getElementById('clearance-stamp');
+        const profileImg = document.getElementById('profile-img');
+        const memeticKill = document.getElementById('memetic-kill');
 
+       
         setInterval(() => {
             const now = new Date();
             document.getElementById('site-clock').innerText = "SITE-ID-TIME: " + now.toLocaleTimeString();
         }, 1000);
 
-        
+      
         const docElements = document.querySelectorAll('.document-card > *');
         docElements.forEach(el => el.style.opacity = '0');
 
+    
+        let clickCount = 0;
+        profileImg.addEventListener('click', () => {
+            clickCount++;
+            
+            profileImg.style.filter = "grayscale(100%) contrast(2) invert(1)";
+            setTimeout(() => { profileImg.style.filter = "grayscale(100%) contrast(1.5)"; }, 150);
+            
+            if (clickCount >= 5) {
+                memeticKill.style.display = 'flex';
+                
+            }
+        });
+
+        
         passkeyInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 const inputVal = this.value.trim().toUpperCase();
-                if (inputVal !== '') {
-                    
-                    
-                    if (inputVal === 'O-5' || inputVal === 'O5') {
-                        o5Data.style.display = 'block';
-                        stamp.innerText = 'O5 ONLY';
-                        stamp.style.color = '#fff';
-                        stamp.style.borderColor = '#fff';
-                        stamp.style.background = '#c00';
-                    }
+                
+                
+                if (inputVal === '') return;
 
-                   
-                    this.value = 'AUTHORIZATION ACCEPTED. DECRYPTING...';
+            
+                if (inputVal === 'MATJUPRI') {
+                    this.value = 'WARNING: FELINE CONTAINMENT BREACH';
+                    this.style.color = '#ff9900';
                     this.disabled = true;
-                    this.style.color = '#00ff00';
+                    setTimeout(() => { this.value = ''; this.style.color = '#fff'; this.disabled = false; this.focus(); }, 2500);
+                    return;
+                }
+                if (inputVal === 'STRELOK') {
+                    this.value = 'EMISSION IMMINENT. SEEK SHELTER.';
+                    this.style.color = '#ff0000';
+                    this.disabled = true;
+                    setTimeout(() => { this.value = ''; this.style.color = '#fff'; this.disabled = false; this.focus(); }, 2500);
+                    return;
+                }
+                if (inputVal === 'YD0AAI') {
+                    this.value = 'INTERCEPT: -.. . .- -..'; 
+                    this.style.color = '#00ffff';
+                    this.disabled = true;
+                    setTimeout(() => { this.value = ''; this.style.color = '#fff'; this.disabled = false; this.focus(); }, 2500);
+                    return;
+                }
+                if (inputVal === 'KETER') {
+                    this.value = 'INITIATING SITE LOCKDOWN...';
+                    this.style.color = '#ff0000';
+                    this.disabled = true;
+                    authScreen.style.backgroundColor = '#4a0000';
+                    setTimeout(() => { 
+                        this.value = ''; this.style.color = '#fff'; this.disabled = false; 
+                        authScreen.style.backgroundColor = '#050505'; this.focus();
+                    }, 2500);
+                    return;
+                }
+
+                
+                if (inputVal === 'O-5' || inputVal === 'O5') {
+                    o5Data.style.display = 'block';
+                    stamp.innerText = 'O5 ONLY';
+                    stamp.style.color = '#fff';
+                    stamp.style.borderColor = '#fff';
+                    stamp.style.background = '#c00';
+                }
+
+                
+                this.value = 'AUTHORIZATION ACCEPTED. DECRYPTING...';
+                this.disabled = true;
+                this.style.color = '#00ff00';
+                
+                setTimeout(() => {
+                    authScreen.style.opacity = '0';
                     
                     setTimeout(() => {
-                        authScreen.style.opacity = '0';
+                        authScreen.style.display = 'none';
+                        mainContent.style.display = 'block';
+                        mainContent.style.opacity = '1';
                         
-                        setTimeout(() => {
-                            authScreen.style.display = 'none';
-                            mainContent.style.display = 'block';
-                            mainContent.style.opacity = '1';
-                            
-                            
-                            docElements.forEach((el, index) => {
-                                setTimeout(() => {
-                                    el.style.transition = 'opacity 0.1s ease-in';
-                                    el.style.opacity = '1';
-                                }, 300 + (index * 250)); 
-                            });
+                  
+                        docElements.forEach((el, index) => {
+                            setTimeout(() => {
+                                el.style.transition = 'opacity 0.1s ease-in';
+                                el.style.opacity = '1';
+                            }, 300 + (index * 250)); 
+                        });
 
-                        }, 500);
-                    }, 1200);
-                }
+                    }, 500);
+                }, 1200);
             }
         });
     </script>
