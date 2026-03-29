@@ -75,7 +75,7 @@
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); } }
         .map-readout { background: #111; color: #0f0; padding: 10px; font-size: 11px; font-family: monospace; border-top: 1px solid #333; height: 40px; display: flex; align-items: center; }
 
-      
+        /* --- CCTV --- */
         .cctv-screen { background: #1a1a1a; margin: 15px; height: 180px; position: relative; overflow: hidden; border: 3px solid #050505; box-shadow: inset 0 0 20px #000; }
         .cctv-static { position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: repeating-radial-gradient(#000 0.0001%, #ffffff 0.0002%); opacity: 0.12; animation: staticAnim 0.1s infinite; z-index: 1; pointer-events: none; }
         @keyframes staticAnim { 0% { transform: translate(0,0); } 100% { transform: translate(5px, 5px); } }
@@ -83,9 +83,6 @@
         .cctv-rec { color: red; animation: blink 1s infinite; font-weight: bold; }
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
         .cctv-entity { position: absolute; bottom: 20px; right: 30px; width: 40px; height: 30px; background: rgba(255,255,255,0.05); border-radius: 40% 40% 10% 10%; filter: blur(2px); transition: all 3s ease; }
-        
-        .telemetry-board { background: #050505; color: #00ffff; font-family: monospace; padding: 15px; margin: 15px; border: 1px solid #333; font-size: 12px; line-height: 1.8; }
-        .tele-row { display: flex; justify-content: space-between; border-bottom: 1px dashed #222; margin-bottom: 5px; }
 
         #o5-clearance-data { display: none; margin: 20px 0; padding-top: 20px; border-top: 2px dashed #c00; font-size: 13px; line-height: 1.6; }
         #o5-clearance-data strong { color: #c00; }
@@ -154,7 +151,7 @@ Type 'help' for a list of available directives.
             <div class="data-field"><strong>CALLSIGN:</strong> YD0AAI</div>
             
             <p class="bio-text">
-                <strong>PROFILE:</strong> Subject is a Level 4 software developer stationed at Sector Jakarta Timur. Primary competencies involve architectural coding and digital environment structuring <span class="redacted" onclick="this.classList.add('revealed')">(Game Dev)</span>. Field combat exercises are strictly limited to kinetic simulation environments <span class="redacted" onclick="this.classList.add('revealed')">(Airsoft)</span>. Subject dedicates extensive off-duty cycles to Euclidean voxel manipulation <span class="redacted" onclick="this.classList.add('revealed')">(Minecraft)</span> and hardware telemetry routing. Cohabitation with one (1) non-anomalous feline entity designated 'Matjupri' is authorized.
+                <strong>PROFILE:</strong> Subject is a Level 4 software developer stationed at Sector Jakarta Timur. Primary competencies involve architectural coding and digital environment structuring <span class="redacted" onclick="this.classList.add('revealed')">(Game Dev)</span>. Field combat exercises are strictly limited to kinetic simulation environments <span class="redacted" onclick="this.classList.add('revealed')">(Airsoft)</span>. Subject dedicates extensive off-duty cycles to Euclidean voxel manipulation <span class="redacted" onclick="this.classList.add('revealed')">(Minecraft)</span> and HAM radio operations. Cohabitation with one (1) non-anomalous feline entity designated 'Matjupri' is authorized and monitored.
             </p>
 
             <button class="collapsible-btn">ACCESS SURVEILLANCE FEED [MATJUPRI]</button>
@@ -169,19 +166,27 @@ Type 'help' for a list of available directives.
                 </div>
             </div>
 
-            <button class="collapsible-btn">VIEW LIVE HARDWARE TELEMETRY</button>
-            <div class="timeline-wrapper">
-                <div class="telemetry-board">
-                    <div class="tele-row"><span>ARDUINO LOGIC_V:</span><span id="t-volt">5.02v</span></div>
-                    <div class="tele-row"><span>PELTIER CORE_TEMP:</span><span id="t-temp">14.2°C</span></div>
-                    <div class="tele-row"><span>YD0AAI RF_NOISE:</span><span id="t-rf">-84 dBm</span></div>
-                    <div class="tele-row"><span>SYSTEM LOAD:</span><span id="t-load">24%</span></div>
-                </div>
-            </div>
-
             <button class="collapsible-btn">VIEW TERMINAL ACCESS LOG</button>
             <div class="timeline-wrapper">
                 <div class="access-log" id="access-log-container"></div>
+            </div>
+
+            <button class="collapsible-btn">EXPAND CHRONOLOGICAL LOG</button>
+            <div class="timeline-wrapper">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">AGE 08 | INCIDENT ZERO</div>
+                        <div class="timeline-text">Subject demonstrated premature aptitude for algorithmic logic and syntax manipulation. Early exposure to coding environments fundamentally altered cognitive processing.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2022 - 2025 | PHASE I</div>
+                        <div class="timeline-text">Assigned to facility <strong>SMPN 252</strong> for preliminary cognitive conditioning. Subject maintained baseline parameters while expanding private digital archives.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">PRESENT | PHASE II</div>
+                        <div class="timeline-text">Transferred to high-yield facility <strong>SMKN 65</strong> for advanced vocational structuring. Current operational focus shifted toward software architecture.</div>
+                    </div>
+                </div>
             </div>
 
             <button class="collapsible-btn">ACCESS TACTICAL SECTOR MAP</button>
@@ -219,7 +224,7 @@ Type 'help' for a list of available directives.
 
     <script>
         
-       
+        
         const biosScreen = document.getElementById('bios-screen');
         const authScreen = document.getElementById('auth-screen');
         const passkeyInput = document.getElementById('passkey');
@@ -248,7 +253,7 @@ Type 'help' for a list of available directives.
             }, 500);
         }, delay + 800);
 
-       
+      
         const mainContent = document.getElementById('main-content');
         const o5Data = document.getElementById('o5-clearance-data');
         const stamp = document.getElementById('clearance-stamp');
@@ -293,7 +298,7 @@ Type 'help' for a list of available directives.
             });
         });
 
-        
+       
         document.addEventListener('keydown', function(e) {
             if (e.key === '`' || e.key === '~') {
                 e.preventDefault(); devConsole.classList.toggle('active');
@@ -358,17 +363,7 @@ Type 'help' for a list of available directives.
             }
         });
 
-        
-        setInterval(() => {
-            if(mainContent.style.display === 'block') {
-                document.getElementById('t-volt').innerText = (Math.random() * (5.10 - 4.90) + 4.90).toFixed(2) + 'v';
-                document.getElementById('t-temp').innerText = (Math.random() * (15.5 - 13.5) + 13.5).toFixed(1) + '°C';
-                document.getElementById('t-rf').innerText = Math.floor(Math.random() * (-80 - -90) + -90) + ' dBm';
-                document.getElementById('t-load').innerText = Math.floor(Math.random() * (35 - 18) + 18) + '%';
-            }
-        }, 800);
-
-       
+    
         setInterval(() => {
             const entity = document.getElementById('cat-entity');
             if(Math.random() > 0.7) {
@@ -378,7 +373,7 @@ Type 'help' for a list of available directives.
             }
         }, 4000);
 
-        
+       
         function getDevice() {
             const ua = navigator.userAgent;
             if (/iPhone|iPad|iPod/i.test(ua)) return "Mobile OS [iOS Variant]";
@@ -401,7 +396,7 @@ Type 'help' for a list of available directives.
             logContainer.innerHTML += `<div class="log-entry" style="background: rgba(0,255,0,0.1);"><span class="log-time">[${timeNow}]</span> PING: <span class="log-device">${getDevice()} (YOU)</span> | CLEARANCE: <span class="log-clearance ${clearClass}">${randomClearance}</span></div>`;
         }
 
-        
+       
         const morseBtn = document.getElementById('morse-btn');
         let audioCtx;
         if (morseBtn) {
