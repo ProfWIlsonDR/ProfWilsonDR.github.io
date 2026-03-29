@@ -12,12 +12,12 @@
         .scanline { width: 100%; height: 100px; z-index: 9999; position: fixed; pointer-events: none; background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(200,200,200,0.1) 50%, rgba(0,0,0,0) 100%); animation: scan 6s linear infinite; }
         @keyframes scan { 0% { top: -100px; } 100% { top: 100vh; } }
 
-        body { background-color: #050505; color: #d4d4d4; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; overflow-y: auto; }
+        body { background-color: #050505; color: #d4d4d4; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; overflow-x: hidden; }
 
-        #bios-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000; color: #d4d4d4; z-index: 10000; padding: 20px; font-size: 14px; display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; transition: opacity 0.5s ease; }
+        #bios-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000; color: #d4d4d4; z-index: 10000; padding: 20px; font-size: 14px; display: flex; flex-direction: column; transition: opacity 0.5s ease; }
         .bios-line { opacity: 0; margin-bottom: 4px; text-shadow: 0 0 2px #d4d4d4; }
 
-        #auth-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #050505; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 999; transition: opacity 0.5s ease, background-color 0.2s ease; opacity: 0; }
+        #auth-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #050505; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 999; transition: opacity 0.5s ease; opacity: 0; }
         .auth-container { width: 90%; max-width: 600px; border: 1px solid #333; padding: 30px; background: #0a0a0a; box-shadow: 0 0 15px rgba(255, 0, 0, 0.1); animation: flicker 0.15s infinite; }
         @keyframes flicker { 0% { opacity: 0.97; } 50% { opacity: 1; } 100% { opacity: 0.98; } }
 
@@ -25,39 +25,29 @@
         .warning-text { color: #ff3333; font-weight: bold; text-align: center; margin-bottom: 30px; text-transform: uppercase; }
         .input-line { display: flex; align-items: center; margin-top: 20px; border-top: 1px solid #333; padding-top: 20px; }
         .input-line span { color: #ff3333; margin-right: 10px; font-weight: bold;}
-        input[type="text"] { background: transparent; border: none; color: #fff; font-size: 16px; width: 100%; outline: none; text-transform: uppercase; font-family: 'Courier New', Courier, monospace; }
+        input[type="text"] { background: transparent; border: none; color: #fff; font-size: 16px; width: 100%; outline: none; text-transform: uppercase; }
 
-        #main-content { display: none; opacity: 0; transition: opacity 1s ease; width: 100%; max-width: 500px; padding-bottom: 80px; }
+        #main-content { display: none; opacity: 0; transition: transform 0.1s ease-out, opacity 1s ease; width: 100%; max-width: 500px; padding-bottom: 80px; }
         .document-card { background-color: #e5e5e5; color: #111; border: 2px solid #111; padding: 30px; position: relative; box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); }
         .doc-header { border-bottom: 3px double #111; padding-bottom: 15px; margin-bottom: 20px; text-align: center; }
         .doc-header h1 { font-size: 22px; text-transform: uppercase; letter-spacing: 2px;}
 
-        .classified-stamp { position: absolute; top: 20px; right: 20px; color: #c00; border: 2px solid #c00; padding: 5px 10px; font-weight: bold; font-size: 18px; transform: rotate(15deg); opacity: 0.8; transition: all 0.3s ease; }
+        .classified-stamp { position: absolute; top: 20px; right: 20px; color: #c00; border: 2px solid #c00; padding: 5px 10px; font-weight: bold; font-size: 18px; transform: rotate(15deg); opacity: 0.8; }
 
-        .profile-pic { width: 140px; height: 140px; border: 3px solid #111; object-fit: cover; margin: 0 auto 20px; display: block; filter: grayscale(100%) contrast(1.5); cursor: crosshair; transition: filter 0.1s; }
+        .profile-pic { width: 140px; height: 140px; border: 3px solid #111; object-fit: cover; margin: 0 auto 20px; display: block; filter: grayscale(100%) contrast(1.5); cursor: crosshair; }
         .data-field { margin-bottom: 10px; font-size: 14px; }
         .data-field strong { background: #111; color: #fff; padding: 2px 6px; margin-right: 8px;}
-        .bio-text { font-size: 13px; line-height: 1.6; margin: 20px 0; text-align: justify; border-left: 3px solid #111; padding-left: 15px; }
-
-        .redacted { background-color: #111; color: #111; padding: 0 5px; cursor: pointer; transition: background 0.3s; user-select: none; }
-        .redacted:hover { background-color: #444; }
+        
+        .redacted { background-color: #111; color: #111; padding: 0 5px; cursor: pointer; user-select: none; }
+        .redacted.revealed { background-color: transparent; color: inherit; cursor: default; }
         @keyframes digital-glitch { 0% { background-color: #111; color: #111; transform: translate(0); } 20% { background-color: #c00; color: #fff; transform: translate(-2px, 1px); } 40% { background-color: #fff; color: #000; transform: translate(2px, -1px); } 60% { background-color: #111; color: #111; transform: translate(-1px, 2px); } 80% { background-color: #c00; color: #fff; transform: translate(1px, -2px); } 100% { background-color: transparent; color: inherit; transform: translate(0); } }
-        .redacted.revealed { animation: digital-glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; cursor: default; }
+        .redacted.revealed { animation: digital-glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
 
-        .collapsible-btn { background-color: #111; color: #fff; cursor: pointer; padding: 12px; width: 100%; border: 2px solid #111; text-align: left; outline: none; font-size: 14px; font-weight: bold; margin-top: 10px; transition: 0.3s; text-transform: uppercase; font-family: 'Courier New', Courier, monospace; }
-        .collapsible-btn:hover, .collapsible-btn.active { background-color: #c00; color: #fff; border-color: #c00; }
+        .collapsible-btn { background-color: #111; color: #fff; cursor: pointer; padding: 12px; width: 100%; border: 2px solid #111; text-align: left; outline: none; font-size: 14px; font-weight: bold; margin-top: 10px; text-transform: uppercase; }
+        .collapsible-btn:hover, .collapsible-btn.active { background-color: #c00; color: #fff; }
         .collapsible-btn::after { content: '[+]'; float: right; color: inherit; }
         .collapsible-btn.active::after { content: '[-]'; }
         .timeline-wrapper { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; background: #d9d9d9; border-left: 2px solid #111; border-right: 2px solid #111; border-bottom: 2px solid #111; margin-top: -2px; }
-
-        .access-log { padding: 15px; font-family: monospace; font-size: 11px; background: #0a0a0a; color: #0f0; height: 150px; overflow-y: auto; border-top: 1px solid #333; }
-        .log-entry { margin-bottom: 5px; border-bottom: 1px dashed #333; padding-bottom: 5px; }
-        .log-time { color: #888; }
-        .log-device { color: #fff; }
-        .log-clearance { font-weight: bold; }
-        .clearance-D { color: #ff5555; }
-        .clearance-L1 { color: #ffaa00; }
-        .clearance-L4 { color: #00ff00; }
 
         .timeline { border-left: 2px dashed #111; margin: 20px 20px 20px 30px; padding-left: 15px; }
         .timeline-item { margin-bottom: 20px; position: relative; }
@@ -75,47 +65,33 @@
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); } }
         .map-readout { background: #111; color: #0f0; padding: 10px; font-size: 11px; font-family: monospace; border-top: 1px solid #333; height: 40px; display: flex; align-items: center; }
 
-        /* --- CCTV --- */
-        .cctv-screen { background: #1a1a1a; margin: 15px; height: 180px; position: relative; overflow: hidden; border: 3px solid #050505; box-shadow: inset 0 0 20px #000; }
-        .cctv-static { position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: repeating-radial-gradient(#000 0.0001%, #ffffff 0.0002%); opacity: 0.12; animation: staticAnim 0.1s infinite; z-index: 1; pointer-events: none; }
-        @keyframes staticAnim { 0% { transform: translate(0,0); } 100% { transform: translate(5px, 5px); } }
-        .cctv-overlay { position: absolute; top: 10px; left: 10px; color: #fff; font-family: monospace; font-size: 12px; z-index: 2; text-shadow: 1px 1px 0 #000; }
-        .cctv-rec { color: red; animation: blink 1s infinite; font-weight: bold; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
-        .cctv-entity { position: absolute; bottom: 20px; right: 30px; width: 40px; height: 30px; background: rgba(255,255,255,0.05); border-radius: 40% 40% 10% 10%; filter: blur(2px); transition: all 3s ease; }
-
         #o5-clearance-data { display: none; margin: 20px 0; padding-top: 20px; border-top: 2px dashed #c00; font-size: 13px; line-height: 1.6; }
         #o5-clearance-data strong { color: #c00; }
 
         .social-links { display: flex; flex-direction: column; gap: 10px; margin-top: 25px; border-top: 1px dashed #111; padding-top: 20px; }
         .social-btn { display: flex; align-items: center; background-color: #fff; color: #111; text-decoration: none; padding: 12px; border: 1px solid #111; font-weight: bold; font-size: 13px; text-transform: uppercase; transition: all 0.2s ease; cursor: pointer; }
         .social-btn:hover { background-color: #111; color: #fff; }
-        #site-clock { position: fixed; bottom: 12px; right: 10px; font-size: 10px; color: #555; letter-spacing: 1px; z-index: 1001; }
+
+        #nfc-metadata { background: #0a0a0a; border: 1px solid #333; margin-top: 25px; padding: 15px; font-size: 11px; color: #0f0; }
+        .nfc-line { margin-bottom: 6px; border-bottom: 1px dashed #222; padding-bottom: 4px; }
+        .nfc-line:last-child { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
+        .nfc-label { color: #888; display: inline-block; width: 110px; }
+        .nfc-value.warning { color: #ff3333; font-weight: bold; animation: textPulse 2s infinite; }
+        @keyframes textPulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        
+        #amnestic-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 99999; display: none; opacity: 0; transition: opacity 0.1s; pointer-events: none; }
+        .amnestic-btn { background: #c00; color: #fff; text-align: center; border-color: #f00; margin-top: 30px; animation: flicker 3s infinite; }
+        .amnestic-btn::after { content: '' !important; }
 
         #memetic-kill { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: repeating-radial-gradient(circle, #000, #000 15px, #fff 15px, #fff 30px); z-index: 10000; justify-content: center; align-items: center; flex-direction: column; animation: spin-strobe 0.15s linear infinite; }
         .memetic-text { background: #000; color: #f00; padding: 20px 40px; font-size: 2.5rem; border: 5px solid #f00; font-weight: bold; text-align: center; text-transform: uppercase; box-shadow: 0 0 50px #f00; }
-
-        #dev-console { position: fixed; top: -50vh; left: 0; width: 100%; height: 40vh; background: rgba(0, 0, 0, 0.95); border-bottom: 2px solid #00ff00; z-index: 99999; padding: 15px; display: flex; flex-direction: column; transition: top 0.3s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 10px 30px rgba(0,255,0,0.1); }
-        #dev-console.active { top: 0; }
-        #console-output { flex-grow: 1; overflow-y: auto; color: #00ff00; font-size: 12px; margin-bottom: 10px; white-space: pre-wrap; word-wrap: break-word; }
-        .console-input-wrapper { display: flex; align-items: center; border-top: 1px dashed #333; padding-top: 10px; }
-        .console-input-wrapper span { color: #00ff00; margin-right: 10px; }
-        #console-input { background: transparent; border: none; color: #00ff00; font-size: 14px; width: 100%; outline: none; text-transform: lowercase; }
+        #site-clock { position: fixed; bottom: 12px; right: 10px; font-size: 10px; color: #555; letter-spacing: 1px; z-index: 1001; }
     </style>
 </head>
 <body>
 
+    <div id="amnestic-overlay"></div>
     <div id="bios-screen"></div>
-
-    <div id="dev-console">
-        <div id="console-output">SCP OS Kernel v4.2.19 [Root access granted]
-Type 'help' for a list of available directives.
---------------------------------------------------</div>
-        <div class="console-input-wrapper">
-            <span>root@site-jt:~#</span>
-            <input type="text" id="console-input" autocomplete="off">
-        </div>
-    </div>
 
     <div id="memetic-kill">
         <div class="memetic-text">MEMETIC KILL AGENT ACTIVATED<br><span style="font-size: 1.5rem; color: #fff;">CARDIAC ARREST IMMINENT</span></div>
@@ -150,26 +126,9 @@ Type 'help' for a list of available directives.
             <div class="data-field"><strong>CLEARANCE:</strong> Level 4</div>
             <div class="data-field"><strong>CALLSIGN:</strong> YD0AAI</div>
             
-            <p class="bio-text">
-                <strong>PROFILE:</strong> Subject is a Level 4 software developer stationed at Sector Jakarta Timur. Primary competencies involve architectural coding and digital environment structuring <span class="redacted" onclick="this.classList.add('revealed')">(Game Dev)</span>. Field combat exercises are strictly limited to kinetic simulation environments <span class="redacted" onclick="this.classList.add('revealed')">(Airsoft)</span>. Subject dedicates extensive off-duty cycles to Euclidean voxel manipulation <span class="redacted" onclick="this.classList.add('revealed')">(Minecraft)</span> and HAM radio operations. Cohabitation with one (1) non-anomalous feline entity designated 'Matjupri' is authorized and monitored.
+            <p style="font-size: 13px; line-height: 1.6; margin: 20px 0; border-left: 3px solid #111; padding-left: 15px; text-align: justify;">
+                <strong>PROFILE:</strong> Subject is a Level 4 software developer stationed at Sector Jakarta Timur. Primary competencies involve architectural coding and digital environment structuring <span class="redacted" onclick="this.classList.add('revealed'); triggerHaptic(20);">(Game Dev)</span>. Field combat exercises are strictly limited to kinetic simulation environments <span class="redacted" onclick="this.classList.add('revealed'); triggerHaptic(20);">(Airsoft)</span>. Subject dedicates extensive off-duty cycles to Euclidean voxel manipulation <span class="redacted" onclick="this.classList.add('revealed'); triggerHaptic(20);">(Minecraft)</span> and HAM radio operations. Cohabitation with one (1) non-anomalous feline entity designated 'Matjupri' is authorized and monitored.
             </p>
-
-            <button class="collapsible-btn">ACCESS SURVEILLANCE FEED [MATJUPRI]</button>
-            <div class="timeline-wrapper">
-                <div class="cctv-screen">
-                    <div class="cctv-static"></div>
-                    <div class="cctv-overlay">
-                        <span class="cctv-rec">● REC</span> CAM_04 // SECTOR ALPHA<br>
-                        <span id="cctv-time">--:--:--</span>
-                    </div>
-                    <div class="cctv-entity" id="cat-entity"></div>
-                </div>
-            </div>
-
-            <button class="collapsible-btn">VIEW TERMINAL ACCESS LOG</button>
-            <div class="timeline-wrapper">
-                <div class="access-log" id="access-log-container"></div>
-            </div>
 
             <button class="collapsible-btn">EXPAND CHRONOLOGICAL LOG</button>
             <div class="timeline-wrapper">
@@ -205,30 +164,42 @@ Type 'help' for a list of available directives.
             </div>
 
             <div id="o5-clearance-data">
-                <strong>ADDENDUM [O5-COMMAND] - PSYCHOLOGICAL PROFILE:</strong> Subject's private database archives contain extensive behavioral simulations regarding Class-K exclusion zones <span class="redacted" onclick="this.classList.add('revealed')">(S.T.A.L.K.E.R.)</span> and localized bio-hazard outbreaks <span class="redacted" onclick="this.classList.add('revealed')">(Resident Evil)</span>. While currently benign, Command mandates routine screening.
+                <strong>ADDENDUM [O5-COMMAND] - PSYCHOLOGICAL PROFILE:</strong> Subject's private database archives contain extensive behavioral simulations regarding Class-K exclusion zones <span class="redacted" onclick="this.classList.add('revealed'); triggerHaptic(20);">(S.T.A.L.K.E.R.)</span> and localized bio-hazard outbreaks <span class="redacted" onclick="this.classList.add('revealed'); triggerHaptic(20);">(Resident Evil)</span>. While currently benign, Command mandates routine screening.
             </div>
 
             <div class="social-links">
-                <a href="https://github.com/ProfWilsonDR" class="social-btn" target="_blank">
+                <a href="https://github.com/ProfWilsonDR" class="social-btn" target="_blank" onclick="triggerHaptic(30);">
                     <i class="fab fa-github"></i> [ACCESS GITHUB ARCHIVE]
                 </a>
-                <a href="https://instagram.com/jasoncarburator" class="social-btn" target="_blank">
+                <a href="https://instagram.com/jasoncarburator" class="social-btn" target="_blank" onclick="triggerHaptic(30);">
                     <i class="fab fa-instagram"></i> [VIEW INSTAGRAM SURVEILLANCE]
                 </a>
-                <a class="social-btn" id="morse-btn">
+                <a class="social-btn" id="morse-btn" onclick="triggerHaptic(30);">
                     <i class="fas fa-satellite-dish"></i> [INITIATE YD0AAI RF PING]
                 </a>
             </div>
+
+            <div id="nfc-metadata">
+                <div class="nfc-line"><span class="nfc-label">PROTOCOL:</span> ISO/IEC 14443-A (NFC)</div>
+                <div class="nfc-line"><span class="nfc-label">HANDSHAKE:</span> SECTOR-JT-ENCRYPTED</div>
+                <div class="nfc-line"><span class="nfc-label">TRACE ORIGIN:</span> <span id="nfc-loc">INITIATING GEO-TRACE...</span></div>
+                <div class="nfc-line"><span class="nfc-label">TOTAL SCANS:</span> <span id="nfc-counter" class="nfc-value warning">0000</span></div>
+            </div>
+
+            <button class="collapsible-btn amnestic-btn" onclick="administerAmnestic()">[ADMINISTER CLASS-A AMNESTICS]</button>
         </div>
     </div>
 
     <script>
-        
-        
-        const biosScreen = document.getElementById('bios-screen');
-        const authScreen = document.getElementById('auth-screen');
-        const passkeyInput = document.getElementById('passkey');
-        
+        function triggerHaptic(p) { if (navigator.vibrate) navigator.vibrate(p); }
+
+        function launchFullscreen(element) {
+            if(element.requestFullscreen) { element.requestFullscreen(); }
+            else if(element.mozRequestFullScreen) { element.mozRequestFullScreen(); }
+            else if(element.webkitRequestFullscreen) { element.webkitRequestFullscreen(); }
+            else if(element.msRequestFullscreen) { element.msRequestFullscreen(); }
+        }
+
         const biosSequence = [
             "SCP BIOS (C) 2026 Foundation Sector-JT", "BIOS Date 03/29/26 Ver 4.2.19", "CPU: Hexa-Core Metaphysical Processor, Speed: 3.4 GHz",
             "Memory Test: 640000K OK", "", "Initializing Euclidean Voxel Render Engine... [OK]", "Mounting Drive C: [O5-CLASSIFIED]... [OK]",
@@ -240,50 +211,39 @@ Type 'help' for a list of available directives.
         biosSequence.forEach((text) => {
             setTimeout(() => {
                 const line = document.createElement('div'); line.className = 'bios-line'; line.innerText = text;
-                biosScreen.appendChild(line); setTimeout(() => { line.style.opacity = '1'; }, 50);
+                document.getElementById('bios-screen').appendChild(line); setTimeout(() => { line.style.opacity = '1'; }, 50);
             }, delay);
             delay += text === "" ? 400 : Math.random() * 150 + 100; 
         });
 
         setTimeout(() => {
-            biosScreen.style.opacity = '0';
+            document.getElementById('bios-screen').style.opacity = '0';
             setTimeout(() => {
-                biosScreen.style.display = 'none'; authScreen.style.display = 'flex';
-                setTimeout(() => { authScreen.style.opacity = '1'; passkeyInput.focus(); }, 100);
+                document.getElementById('bios-screen').style.display = 'none'; 
+                document.getElementById('auth-screen').style.display = 'flex';
+                setTimeout(() => { document.getElementById('auth-screen').style.opacity = '1'; document.getElementById('passkey').focus(); }, 100);
             }, 500);
         }, delay + 800);
-
-      
-        const mainContent = document.getElementById('main-content');
-        const o5Data = document.getElementById('o5-clearance-data');
-        const stamp = document.getElementById('clearance-stamp');
-        const profileImg = document.getElementById('profile-img');
-        const memeticKill = document.getElementById('memetic-kill');
-        
-        const devConsole = document.getElementById('dev-console');
-        const consoleInput = document.getElementById('console-input');
-        const consoleOutput = document.getElementById('console-output');
 
         setInterval(() => {
             const now = new Date();
             document.getElementById('site-clock').innerText = "SITE-ID-TIME: " + now.toLocaleTimeString();
-            document.getElementById('cctv-time').innerText = now.toLocaleTimeString();
         }, 1000);
 
-        const docElements = document.querySelectorAll('.document-card > *');
-        docElements.forEach(el => el.style.opacity = '0');
-
         let clickCount = 0;
-        profileImg.addEventListener('click', () => {
-            clickCount++; profileImg.style.filter = "grayscale(100%) contrast(2) invert(1)";
-            setTimeout(() => { profileImg.style.filter = "grayscale(100%) contrast(1.5)"; }, 150);
-            if (clickCount >= 5) { memeticKill.style.display = 'flex'; }
+        document.getElementById('profile-img').addEventListener('click', () => {
+            clickCount++; document.getElementById('profile-img').style.filter = "grayscale(100%) contrast(2) invert(1)";
+            triggerHaptic(50);
+            setTimeout(() => { document.getElementById('profile-img').style.filter = "grayscale(100%) contrast(1.5)"; }, 150);
+            if (clickCount >= 5) { document.getElementById('memetic-kill').style.display = 'flex'; triggerHaptic([100, 50, 100, 50, 500]); }
         });
 
         const collapsibles = document.querySelectorAll('.collapsible-btn');
         collapsibles.forEach(btn => {
             btn.addEventListener('click', function() {
+                if(!this.classList.contains('amnestic-btn')) { triggerHaptic([30, 50, 30]); }
                 this.classList.toggle('active'); const content = this.nextElementSibling;
+                if (!content || !content.classList.contains('timeline-wrapper')) return;
                 if (content.style.maxHeight) { content.style.maxHeight = null; } 
                 else { content.style.maxHeight = content.scrollHeight + "px"; }
             });
@@ -293,110 +253,67 @@ Type 'help' for a list of available directives.
         const mapReadout = document.getElementById('map-readout');
         mapNodes.forEach(node => {
             node.addEventListener('click', (e) => {
+                triggerHaptic(40);
                 mapReadout.innerText = "> INTERCEPTING: " + e.target.getAttribute('data-info');
                 mapReadout.style.opacity = '0.5'; setTimeout(() => { mapReadout.style.opacity = '1'; }, 100);
             });
         });
 
-       
-        document.addEventListener('keydown', function(e) {
-            if (e.key === '`' || e.key === '~') {
-                e.preventDefault(); devConsole.classList.toggle('active');
-                if (devConsole.classList.contains('active')) { setTimeout(() => { consoleInput.focus(); }, 100); } 
-                else { passkeyInput.focus(); }
-            }
+        window.addEventListener('deviceorientation', (e) => {
+            const m = document.getElementById('main-content');
+            const x = e.gamma / 10; const y = e.beta / 10;
+            m.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
         });
 
-        function printToConsole(text) {
-            consoleOutput.innerHTML += `\n> ${text}`;
-            consoleOutput.scrollTop = consoleOutput.scrollHeight;
-        }
-
-        consoleInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const cmd = this.value.trim().toLowerCase();
-                this.value = ''; printToConsole(cmd);
-
-                switch(cmd) {
-                    case 'help': printToConsole("Commands: help, clear, ping, locate matjupri, override o5, stalker, breach, exit"); break;
-                    case 'clear': consoleOutput.innerHTML = "SCP OS Kernel v4.2.19 [Root access granted]\n--------------------------------------------------"; break;
-                    case 'ping': printToConsole("PONG. Server Latency: " + Math.floor(Math.random() * 50 + 10) + "ms"); break;
-                    case 'locate matjupri': printToConsole("SCANNING... Unit 'Matjupri' (Grey Tabby) located at Sector Alpha coordinates. Status: Dormant. Eye status: Green."); break;
-                    case 'override o5': 
-                        o5Data.style.display = 'block'; stamp.innerText = 'O5 ONLY'; stamp.style.color = '#fff'; stamp.style.borderColor = '#fff'; stamp.style.background = '#c00';
-                        printToConsole("SECURITY BREACH: O5 Addendum successfully decrypted."); break;
-                    case 'stalker':
-                        printToConsole("...ESTABLISHING PDA CONNECTION TO CHORNOBYL EXCLUSION ZONE...");
-                        setTimeout(() => printToConsole("WARNING: EMISSION IMMINENT. FIND COVER IMMEDIATELY."), 1000);
-                        setTimeout(() => printToConsole("Artifact 'Jellyfish' detected 45m North."), 2500);
-                        break;
-                    case 'breach': printToConsole("CRITICAL ERROR: MEMETIC HAZARD DEPLOYED."); setTimeout(() => { memeticKill.style.display = 'flex'; devConsole.classList.remove('active'); }, 1000); break;
-                    case 'exit': devConsole.classList.remove('active'); break;
-                    case '': break;
-                    default: printToConsole("Command not recognized. Type 'help' for available directives.");
-                }
-            }
-        });
-
-        passkeyInput.addEventListener('keypress', function(e) {
+        document.getElementById('passkey').addEventListener('keypress', function(e) {
+            triggerHaptic(10);
             if (e.key === 'Enter') {
                 const inputVal = this.value.trim().toUpperCase();
                 if (inputVal === '') return;
 
-                if (inputVal === 'MATJUPRI') { this.value = 'WARNING: FELINE CONTAINMENT BREACH'; this.style.color = '#ff9900'; this.disabled = true; setTimeout(() => { this.value = ''; this.style.color = '#fff'; this.disabled = false; this.focus(); }, 2500); return; }
-                if (inputVal === 'STRELOK') { this.value = 'EMISSION IMMINENT. SEEK SHELTER.'; this.style.color = '#ff0000'; this.disabled = true; setTimeout(() => { this.value = ''; this.style.color = '#fff'; this.disabled = false; this.focus(); }, 2500); return; }
+                const o5Data = document.getElementById('o5-clearance-data');
+                const stamp = document.getElementById('clearance-stamp');
+                const authScreen = document.getElementById('auth-screen');
+
+                if (inputVal === 'MATJUPRI') { this.value = 'WARNING: FELINE CONTAINMENT BREACH'; this.style.color = '#ff9900'; this.disabled = true; triggerHaptic([50, 50, 50]); setTimeout(() => { this.value = ''; this.style.color = '#fff'; this.disabled = false; this.focus(); }, 2500); return; }
+                if (inputVal === 'STRELOK') { this.value = 'EMISSION IMMINENT. SEEK SHELTER.'; this.style.color = '#ff0000'; this.disabled = true; triggerHaptic([100, 100, 100]); setTimeout(() => { this.value = ''; this.style.color = '#fff'; this.disabled = false; this.focus(); }, 2500); return; }
                 if (inputVal === 'YD0AAI') { this.value = 'INTERCEPT: -.. . .- -..'; this.style.color = '#00ffff'; this.disabled = true; setTimeout(() => { this.value = ''; this.style.color = '#fff'; this.disabled = false; this.focus(); }, 2500); return; }
-                if (inputVal === 'KETER') { this.value = 'INITIATING SITE LOCKDOWN...'; this.style.color = '#ff0000'; this.disabled = true; authScreen.style.backgroundColor = '#4a0000'; setTimeout(() => { this.value = ''; this.style.color = '#fff'; this.disabled = false; authScreen.style.backgroundColor = '#050505'; this.focus(); }, 2500); return; }
+                if (inputVal === 'KETER') { this.value = 'INITIATING SITE LOCKDOWN...'; this.style.color = '#ff0000'; this.disabled = true; authScreen.style.backgroundColor = '#4a0000'; triggerHaptic([200, 50, 200]); setTimeout(() => { this.value = ''; this.style.color = '#fff'; this.disabled = false; authScreen.style.backgroundColor = '#050505'; this.focus(); }, 2500); return; }
 
                 if (inputVal === 'O-5' || inputVal === 'O5') { o5Data.style.display = 'block'; stamp.innerText = 'O5 ONLY'; stamp.style.color = '#fff'; stamp.style.borderColor = '#fff'; stamp.style.background = '#c00'; }
 
+               
+                launchFullscreen(document.documentElement);
+
                 this.value = 'AUTHORIZATION ACCEPTED. DECRYPTING...';
                 this.disabled = true; this.style.color = '#00ff00';
+                triggerHaptic([30, 50, 30, 50, 100]);
                 
+                
+                let currentScans = localStorage.getItem('scp_scan_count');
+                if (!currentScans) { currentScans = Math.floor(Math.random() * 800) + 1200; }
+                currentScans = parseInt(currentScans) + 1;
+                localStorage.setItem('scp_scan_count', currentScans);
+                document.getElementById('nfc-counter').innerText = currentScans;
+
+                fetch('https://ipapi.co/json/')
+                    .then(res => res.json())
+                    .then(data => { document.getElementById('nfc-loc').innerText = `[${data.latitude}, ${data.longitude}] - ${data.city}, ${data.country_code}`; })
+                    .catch(() => { document.getElementById('nfc-loc').innerText = 'TRACE FAILED / SIGNAL MASKED'; });
+
                 setTimeout(() => {
                     authScreen.style.opacity = '0';
                     setTimeout(() => {
-                        authScreen.style.display = 'none'; mainContent.style.display = 'block'; mainContent.style.opacity = '1';
+                        authScreen.style.display = 'none'; 
+                        document.getElementById('main-content').style.display = 'block'; 
+                        setTimeout(() => { document.getElementById('main-content').style.opacity = '1'; }, 50);
+                        const docElements = document.querySelectorAll('.document-card > *');
                         docElements.forEach((el, index) => { setTimeout(() => { el.style.transition = 'opacity 0.1s ease-in'; el.style.opacity = '1'; }, 300 + (index * 250)); });
                     }, 500);
                 }, 1200);
             }
         });
 
-    
-        setInterval(() => {
-            const entity = document.getElementById('cat-entity');
-            if(Math.random() > 0.7) {
-                entity.style.right = Math.floor(Math.random() * 80) + 'px';
-                entity.style.bottom = Math.floor(Math.random() * 40) + 'px';
-                entity.style.opacity = Math.random() > 0.5 ? '1' : '0.3';
-            }
-        }, 4000);
-
-       
-        function getDevice() {
-            const ua = navigator.userAgent;
-            if (/iPhone|iPad|iPod/i.test(ua)) return "Mobile OS [iOS Variant]";
-            if (/Android/i.test(ua)) return "Mobile OS [Android Variant]";
-            if (/Win/i.test(ua)) return "Desktop OS [Windows Variant]";
-            if (/Mac/i.test(ua)) return "Desktop OS [macOS Variant]";
-            return "Unknown Device Signature";
-        }
-        const logContainer = document.getElementById('access-log-container');
-        if (logContainer) {
-            const fakeLogs = [
-                { time: "04:12 AM", dev: "Mobile OS [Android Variant]", cl: "Class-D", c: "clearance-D" },
-                { time: "09:44 AM", dev: "Desktop OS [Windows Variant]", cl: "Level 1", c: "clearance-L1" },
-                { time: "14:22 PM", dev: "Unknown Device Signature", cl: "Level 4", c: "clearance-L4" }
-            ];
-            fakeLogs.forEach(log => { logContainer.innerHTML += `<div class="log-entry"><span class="log-time">[${log.time}]</span> PING: <span class="log-device">${log.dev}</span> | CLEARANCE: <span class="log-clearance ${log.c}">${log.cl}</span></div>`; });
-            const randomClearance = ["Class-D", "Level 1", "Level 2", "Level 3"][Math.floor(Math.random() * 4)];
-            const clearClass = randomClearance === "Class-D" ? "clearance-D" : "clearance-L1";
-            const timeNow = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-            logContainer.innerHTML += `<div class="log-entry" style="background: rgba(0,255,0,0.1);"><span class="log-time">[${timeNow}]</span> PING: <span class="log-device">${getDevice()} (YOU)</span> | CLEARANCE: <span class="log-clearance ${clearClass}">${randomClearance}</span></div>`;
-        }
-
-       
         const morseBtn = document.getElementById('morse-btn');
         let audioCtx;
         if (morseBtn) {
@@ -418,6 +335,14 @@ Type 'help' for a list of available directives.
                 }
                 setTimeout(() => { morseBtn.classList.remove('playing'); morseBtn.innerHTML = '<i class="fas fa-satellite-dish"></i> [INITIATE YD0AAI RF PING]'; }, (timeTracker - audioCtx.currentTime) * 1000 + 500);
             });
+        }
+
+        function administerAmnestic() {
+            triggerHaptic([100, 50, 100, 50, 800]);
+            const overlay = document.getElementById('amnestic-overlay');
+            overlay.style.display = 'block';
+            setTimeout(() => { overlay.style.opacity = '1'; }, 10);
+            setTimeout(() => { window.location.reload(); }, 800);
         }
     </script>
 </body>
