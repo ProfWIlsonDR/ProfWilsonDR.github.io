@@ -8,19 +8,12 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; }
 
-     
         body::before {
-            content: " ";
-            display: block;
-            position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0;
+            content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            z-index: 1000;
-            background-size: 100% 2px, 3px 100%;
-            pointer-events: none;
+            z-index: 1000; background-size: 100% 2px, 3px 100%; pointer-events: none;
         }
 
-    
         .scanline {
             width: 100%; height: 100px; z-index: 9999; position: fixed; pointer-events: none;
             background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(200,200,200,0.1) 50%, rgba(0,0,0,0) 100%);
@@ -35,16 +28,14 @@
         }
 
         #auth-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #050505; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 999;
-            transition: opacity 0.5s ease, background-color 0.2s ease;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #050505; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            z-index: 999; transition: opacity 0.5s ease, background-color 0.2s ease;
         }
 
         .auth-container {
             width: 90%; max-width: 600px; border: 1px solid #333; padding: 30px;
-            background: #0a0a0a; box-shadow: 0 0 15px rgba(255, 0, 0, 0.1);
-            animation: flicker 0.15s infinite;
+            background: #0a0a0a; box-shadow: 0 0 15px rgba(255, 0, 0, 0.1); animation: flicker 0.15s infinite;
         }
 
         @keyframes flicker { 0% { opacity: 0.97; } 50% { opacity: 1; } 100% { opacity: 0.98; } }
@@ -54,35 +45,19 @@
         .input-line { display: flex; align-items: center; margin-top: 20px; border-top: 1px solid #333; padding-top: 20px; }
         .input-line span { color: #ff3333; margin-right: 10px; font-weight: bold;}
         
-        input[type="text"] {
-            background: transparent; border: none; color: #fff; font-size: 16px; width: 100%;
-            outline: none; text-transform: uppercase; font-family: 'Courier New', Courier, monospace;
-        }
+        input[type="text"] { background: transparent; border: none; color: #fff; font-size: 16px; width: 100%; outline: none; text-transform: uppercase; font-family: 'Courier New', Courier, monospace; }
 
         #main-content { display: none; opacity: 0; transition: opacity 1s ease; width: 100%; max-width: 500px; padding-bottom: 50px; }
 
-        .document-card {
-            background-color: #e5e5e5; color: #111; border: 2px solid #111;
-            padding: 30px; position: relative; box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-        }
-
+        .document-card { background-color: #e5e5e5; color: #111; border: 2px solid #111; padding: 30px; position: relative; box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); }
         .doc-header { border-bottom: 3px double #111; padding-bottom: 15px; margin-bottom: 20px; text-align: center; }
         .doc-header h1 { font-size: 22px; text-transform: uppercase; letter-spacing: 2px;}
 
-        .classified-stamp {
-            position: absolute; top: 20px; right: 20px; color: #c00; border: 2px solid #c00;
-            padding: 5px 10px; font-weight: bold; font-size: 18px; transform: rotate(15deg); opacity: 0.8;
-            transition: all 0.3s ease;
-        }
+        .classified-stamp { position: absolute; top: 20px; right: 20px; color: #c00; border: 2px solid #c00; padding: 5px 10px; font-weight: bold; font-size: 18px; transform: rotate(15deg); opacity: 0.8; transition: all 0.3s ease; }
 
-        .profile-pic { 
-            width: 140px; height: 140px; border: 3px solid #111; object-fit: cover; 
-            margin: 0 auto 20px; display: block; filter: grayscale(100%) contrast(1.5); 
-            cursor: crosshair; transition: filter 0.1s;
-        }
+        .profile-pic { width: 140px; height: 140px; border: 3px solid #111; object-fit: cover; margin: 0 auto 20px; display: block; filter: grayscale(100%) contrast(1.5); cursor: crosshair; transition: filter 0.1s; }
         .data-field { margin-bottom: 10px; font-size: 14px; }
         .data-field strong { background: #111; color: #fff; padding: 2px 6px; margin-right: 8px;}
-
         .bio-text { font-size: 13px; line-height: 1.6; margin: 20px 0; text-align: justify; border-left: 3px solid #111; padding-left: 15px; }
 
         .redacted { background-color: #111; color: #111; padding: 0 5px; cursor: pointer; transition: background 0.3s; user-select: none; }
@@ -96,8 +71,54 @@
             80% { background-color: #c00; color: #fff; transform: translate(1px, -2px); }
             100% { background-color: transparent; color: inherit; transform: translate(0); }
         }
-
         .redacted.revealed { animation: digital-glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; cursor: default; }
+
+        
+        .collapsible-btn {
+            background-color: #111; color: #fff; cursor: pointer; padding: 12px; width: 100%;
+            border: 2px solid #111; text-align: left; outline: none; font-size: 14px;
+            font-weight: bold; margin-top: 10px; transition: 0.3s; text-transform: uppercase;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .collapsible-btn:hover, .collapsible-btn.active { background-color: #c00; color: #fff; border-color: #c00; }
+        .collapsible-btn::after { content: '[+]'; float: right; color: inherit; }
+        .collapsible-btn.active::after { content: '[-]'; }
+
+        .timeline-wrapper {
+            max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out;
+            background: #d9d9d9; border-left: 2px solid #111; border-right: 2px solid #111; border-bottom: 2px solid #111;
+            margin-top: -2px;
+        }
+        
+        .timeline { border-left: 2px dashed #111; margin: 20px 20px 20px 30px; padding-left: 15px; }
+        .timeline-item { margin-bottom: 20px; position: relative; }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-item::before { content: ''; position: absolute; left: -21px; top: 0; width: 10px; height: 10px; background: #c00; border: 2px solid #111; border-radius: 50%; }
+        .timeline-date { font-weight: bold; color: #c00; font-size: 12px; margin-bottom: 5px; }
+        .timeline-text { font-size: 13px; color: #111; line-height: 1.5; text-align: justify; }
+
+       
+        .tactical-map-container {
+            background: #050505; border: 2px solid #111; margin: 15px; height: 280px;
+            display: flex; flex-direction: column; overflow: hidden;
+        }
+        .iso-wrapper { flex-grow: 1; display: flex; justify-content: center; align-items: center; perspective: 800px; overflow: hidden; }
+        .iso-grid {
+            width: 250px; height: 250px; background: rgba(0, 255, 0, 0.05);
+            border: 1px solid rgba(0, 255, 0, 0.3); transform: rotateX(60deg) rotateZ(-45deg);
+            position: relative; box-shadow: 0 0 30px rgba(0, 255, 0, 0.1);
+            background-image: linear-gradient(rgba(0, 255, 0, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 0, 0.2) 1px, transparent 1px);
+            background-size: 25px 25px; transition: transform 0.5s ease;
+        }
+        .iso-grid:hover { transform: rotateX(50deg) rotateZ(-35deg) scale(1.1); }
+        .map-node {
+            position: absolute; width: 12px; height: 12px; background: #f00; border-radius: 50%;
+            transform: translate(-50%, -50%) rotateX(-60deg) rotateZ(45deg); cursor: crosshair;
+            box-shadow: 0 0 10px #f00; animation: pulse 1.5s infinite; transition: 0.2s;
+        }
+        .map-node:hover { background: #fff; box-shadow: 0 0 15px #fff; transform: translate(-50%, -50%) rotateX(-60deg) rotateZ(45deg) scale(1.5); }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); } }
+        .map-readout { background: #111; color: #0f0; padding: 10px; font-size: 11px; font-family: monospace; border-top: 1px solid #333; height: 40px; display: flex; align-items: center; }
 
         #o5-clearance-data { display: none; margin: 20px 0; padding-top: 20px; border-top: 2px dashed #c00; font-size: 13px; line-height: 1.6; }
         #o5-clearance-data strong { color: #c00; }
@@ -105,35 +126,44 @@
         .social-links { display: flex; flex-direction: column; gap: 10px; margin-top: 25px; border-top: 1px dashed #111; padding-top: 20px; }
         .social-btn { display: flex; align-items: center; background-color: #fff; color: #111; text-decoration: none; padding: 12px; border: 1px solid #111; font-weight: bold; font-size: 13px; text-transform: uppercase; transition: all 0.2s ease; }
         .social-btn:hover { background-color: #111; color: #fff; }
-
         #site-clock { position: fixed; bottom: 10px; right: 10px; font-size: 10px; color: #555; letter-spacing: 1px; z-index: 1001; }
 
-      
+        
         #memetic-kill {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: repeating-radial-gradient(circle, #000, #000 15px, #fff 15px, #fff 30px);
             z-index: 10000; justify-content: center; align-items: center; flex-direction: column;
             animation: spin-strobe 0.15s linear infinite;
         }
-        .memetic-text { 
-            background: #000; color: #f00; padding: 20px 40px; font-size: 2.5rem; 
-            border: 5px solid #f00; font-weight: bold; text-align: center; text-transform: uppercase;
-            box-shadow: 0 0 50px #f00;
+        .memetic-text { background: #000; color: #f00; padding: 20px 40px; font-size: 2.5rem; border: 5px solid #f00; font-weight: bold; text-align: center; text-transform: uppercase; box-shadow: 0 0 50px #f00; }
+        @keyframes spin-strobe { 0% { filter: invert(0) hue-rotate(0deg); transform: scale(1); } 50% { filter: invert(1) hue-rotate(180deg); transform: scale(1.05); } 100% { filter: invert(0) hue-rotate(360deg); transform: scale(1); } }
+
+        #dev-console {
+            position: fixed; top: -50vh; left: 0; width: 100%; height: 40vh; background: rgba(0, 0, 0, 0.95);
+            border-bottom: 2px solid #00ff00; z-index: 99999; padding: 15px; display: flex; flex-direction: column;
+            transition: top 0.3s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 10px 30px rgba(0,255,0,0.1);
         }
-        @keyframes spin-strobe {
-            0% { filter: invert(0) hue-rotate(0deg); transform: scale(1); }
-            50% { filter: invert(1) hue-rotate(180deg); transform: scale(1.05); }
-            100% { filter: invert(0) hue-rotate(360deg); transform: scale(1); }
-        }
+        #dev-console.active { top: 0; }
+        #console-output { flex-grow: 1; overflow-y: auto; color: #00ff00; font-size: 12px; margin-bottom: 10px; white-space: pre-wrap; word-wrap: break-word; }
+        .console-input-wrapper { display: flex; align-items: center; border-top: 1px dashed #333; padding-top: 10px; }
+        .console-input-wrapper span { color: #00ff00; margin-right: 10px; }
+        #console-input { background: transparent; border: none; color: #00ff00; font-size: 14px; width: 100%; outline: none; text-transform: lowercase; }
     </style>
 </head>
 <body>
 
-    <div id="memetic-kill">
-        <div class="memetic-text">
-            MEMETIC KILL AGENT ACTIVATED<br>
-            <span style="font-size: 1.5rem; color: #fff;">CARDIAC ARREST IMMINENT</span>
+    <div id="dev-console">
+        <div id="console-output">SCP OS Kernel v4.2.19 [Root access granted]
+Type 'help' for a list of available directives.
+--------------------------------------------------</div>
+        <div class="console-input-wrapper">
+            <span>root@site-jt:~#</span>
+            <input type="text" id="console-input" autocomplete="off">
         </div>
+    </div>
+
+    <div id="memetic-kill">
+        <div class="memetic-text">MEMETIC KILL AGENT ACTIVATED<br><span style="font-size: 1.5rem; color: #fff;">CARDIAC ARREST IMMINENT</span></div>
     </div>
 
     <div class="scanline"></div>
@@ -169,8 +199,41 @@
                 <strong>PROFILE:</strong> Subject is a Level 4 software developer stationed at Sector Jakarta Timur. Primary competencies involve architectural coding and digital environment structuring <span class="redacted" onclick="this.classList.add('revealed')">(Game Dev)</span>. Field combat exercises are strictly limited to kinetic simulation environments <span class="redacted" onclick="this.classList.add('revealed')">(Airsoft)</span>. Subject dedicates extensive off-duty cycles to Euclidean voxel manipulation <span class="redacted" onclick="this.classList.add('revealed')">(Minecraft)</span> and HAM radio operations. Cohabitation with one (1) non-anomalous feline entity designated 'Matjupri' is authorized and monitored.
             </p>
 
+            <button class="collapsible-btn">EXPAND CHRONOLOGICAL LOG</button>
+            <div class="timeline-wrapper">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">AGE 08 | INCIDENT ZERO</div>
+                        <div class="timeline-text">Subject demonstrated premature aptitude for algorithmic logic and syntax manipulation. Early exposure to coding environments fundamentally altered cognitive processing.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2022 - 2025 | PHASE I</div>
+                        <div class="timeline-text">Assigned to facility <strong>SMPN 252</strong> for preliminary cognitive conditioning. Subject maintained baseline parameters while expanding private digital archives.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">PRESENT | PHASE II</div>
+                        <div class="timeline-text">Transferred to high-yield facility <strong>SMKN 65</strong> for advanced vocational structuring. Current operational focus shifted toward software architecture.</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="collapsible-btn">ACCESS TACTICAL SECTOR MAP</button>
+            <div class="timeline-wrapper">
+                <div class="tactical-map-container">
+                    <div class="iso-wrapper">
+                        <div class="iso-grid">
+                            <div class="map-node" style="top: 20%; left: 30%;" data-info="SECTOR ALPHA: SMPN 252 (FORMER CONTAINMENT)"></div>
+                            <div class="map-node" style="top: 70%; left: 80%;" data-info="SECTOR BETA: SMKN 65 (CURRENT ASSIGNMENT)"></div>
+                            <div class="map-node" style="top: 50%; left: 50%; background: #00ffff; box-shadow: 0 0 10px #00ffff;" data-info="ANOMALY DETECTED: BIO-UNIT 'MATJUPRI' ROAMING"></div>
+                            <div class="map-node" style="top: 85%; left: 20%; background: #ffaa00; box-shadow: 0 0 10px #ffaa00;" data-info="TRANSMISSION: YD0AAI RF ARRAY ACTIVE"></div>
+                        </div>
+                    </div>
+                    <div class="map-readout" id="map-readout">> AWAITING TACTICAL INPUT...</div>
+                </div>
+            </div>
+
             <div id="o5-clearance-data">
-                <strong>ADDENDUM [O5-COMMAND] - PSYCHOLOGICAL PROFILE:</strong> Subject's private database archives contain extensive behavioral simulations regarding Class-K exclusion zones <span class="redacted" onclick="this.classList.add('revealed')">(S.T.A.L.K.E.R.)</span> and localized bio-hazard outbreaks <span class="redacted" onclick="this.classList.add('revealed')">(Resident Evil)</span>. While currently benign, Command mandates routine screening to ensure these recreational simulations do not blur with operational reality.
+                <strong>ADDENDUM [O5-COMMAND] - PSYCHOLOGICAL PROFILE:</strong> Subject's private database archives contain extensive behavioral simulations regarding Class-K exclusion zones <span class="redacted" onclick="this.classList.add('revealed')">(S.T.A.L.K.E.R.)</span> and localized bio-hazard outbreaks <span class="redacted" onclick="this.classList.add('revealed')">(Resident Evil)</span>. While currently benign, Command mandates routine screening.
             </div>
 
             <div class="social-links">
@@ -195,103 +258,116 @@
         const stamp = document.getElementById('clearance-stamp');
         const profileImg = document.getElementById('profile-img');
         const memeticKill = document.getElementById('memetic-kill');
+        
+        const devConsole = document.getElementById('dev-console');
+        const consoleInput = document.getElementById('console-input');
+        const consoleOutput = document.getElementById('console-output');
 
-       
         setInterval(() => {
-            const now = new Date();
-            document.getElementById('site-clock').innerText = "SITE-ID-TIME: " + now.toLocaleTimeString();
+            const now = new Date(); document.getElementById('site-clock').innerText = "SITE-ID-TIME: " + now.toLocaleTimeString();
         }, 1000);
 
-      
         const docElements = document.querySelectorAll('.document-card > *');
         docElements.forEach(el => el.style.opacity = '0');
 
-    
         let clickCount = 0;
         profileImg.addEventListener('click', () => {
             clickCount++;
-            
             profileImg.style.filter = "grayscale(100%) contrast(2) invert(1)";
             setTimeout(() => { profileImg.style.filter = "grayscale(100%) contrast(1.5)"; }, 150);
-            
-            if (clickCount >= 5) {
-                memeticKill.style.display = 'flex';
+            if (clickCount >= 5) { memeticKill.style.display = 'flex'; }
+        });
+
+      
+        const collapsibles = document.querySelectorAll('.collapsible-btn');
+        collapsibles.forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
+        });
+
+      
+        const mapNodes = document.querySelectorAll('.map-node');
+        const mapReadout = document.getElementById('map-readout');
+        mapNodes.forEach(node => {
+            node.addEventListener('click', (e) => {
+                const info = e.target.getAttribute('data-info');
+                mapReadout.innerText = "> INTERCEPTING: " + info;
                 
+                mapReadout.style.opacity = '0.5';
+                setTimeout(() => { mapReadout.style.opacity = '1'; }, 100);
+            });
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === '`' || e.key === '~') {
+                e.preventDefault();
+                devConsole.classList.toggle('active');
+                if (devConsole.classList.contains('active')) {
+                    setTimeout(() => { consoleInput.focus(); }, 100);
+                } else {
+                    passkeyInput.focus();
+                }
             }
         });
 
-        
+        function printToConsole(text) {
+            consoleOutput.innerHTML += `\n> ${text}`;
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+
+        consoleInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const cmd = this.value.trim().toLowerCase();
+                this.value = '';
+                printToConsole(cmd);
+
+                switch(cmd) {
+                    case 'help': printToConsole("Commands: help, clear, ping, locate matjupri, override o5, breach, exit"); break;
+                    case 'clear': consoleOutput.innerHTML = "SCP OS Kernel v4.2.19 [Root access granted]\n--------------------------------------------------"; break;
+                    case 'ping': printToConsole("PONG. Server Latency: " + Math.floor(Math.random() * 50 + 10) + "ms"); break;
+                    case 'locate matjupri': printToConsole("SCANNING... Unit 'Matjupri' (Grey Tabby) located at Sector Alpha coordinates. Status: Dormant. Eye status: Green. Awaiting rations."); break;
+                    case 'override o5': 
+                        o5Data.style.display = 'block'; stamp.innerText = 'O5 ONLY'; stamp.style.color = '#fff'; stamp.style.borderColor = '#fff'; stamp.style.background = '#c00';
+                        printToConsole("SECURITY BREACH: O5 Addendum successfully decrypted."); break;
+                    case 'breach': printToConsole("CRITICAL ERROR: MEMETIC HAZARD DEPLOYED."); setTimeout(() => { memeticKill.style.display = 'flex'; devConsole.classList.remove('active'); }, 1000); break;
+                    case 'exit': devConsole.classList.remove('active'); break;
+                    case '': break;
+                    default: printToConsole("Command not recognized. Type 'help' for available directives.");
+                }
+            }
+        });
+
         passkeyInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 const inputVal = this.value.trim().toUpperCase();
-                
-                
                 if (inputVal === '') return;
 
-            
-                if (inputVal === 'MATJUPRI') {
-                    this.value = 'WARNING: FELINE CONTAINMENT BREACH';
-                    this.style.color = '#ff9900';
-                    this.disabled = true;
-                    setTimeout(() => { this.value = ''; this.style.color = '#fff'; this.disabled = false; this.focus(); }, 2500);
-                    return;
-                }
-                if (inputVal === 'STRELOK') {
-                    this.value = 'EMISSION IMMINENT. SEEK SHELTER.';
-                    this.style.color = '#ff0000';
-                    this.disabled = true;
-                    setTimeout(() => { this.value = ''; this.style.color = '#fff'; this.disabled = false; this.focus(); }, 2500);
-                    return;
-                }
-                if (inputVal === 'YD0AAI') {
-                    this.value = 'INTERCEPT: -.. . .- -..'; 
-                    this.style.color = '#00ffff';
-                    this.disabled = true;
-                    setTimeout(() => { this.value = ''; this.style.color = '#fff'; this.disabled = false; this.focus(); }, 2500);
-                    return;
-                }
-                if (inputVal === 'KETER') {
-                    this.value = 'INITIATING SITE LOCKDOWN...';
-                    this.style.color = '#ff0000';
-                    this.disabled = true;
-                    authScreen.style.backgroundColor = '#4a0000';
-                    setTimeout(() => { 
-                        this.value = ''; this.style.color = '#fff'; this.disabled = false; 
-                        authScreen.style.backgroundColor = '#050505'; this.focus();
-                    }, 2500);
-                    return;
-                }
+                if (inputVal === 'MATJUPRI') { this.value = 'WARNING: FELINE CONTAINMENT BREACH'; this.style.color = '#ff9900'; this.disabled = true; setTimeout(() => { this.value = ''; this.style.color = '#fff'; this.disabled = false; this.focus(); }, 2500); return; }
+                if (inputVal === 'STRELOK') { this.value = 'EMISSION IMMINENT. SEEK SHELTER.'; this.style.color = '#ff0000'; this.disabled = true; setTimeout(() => { this.value = ''; this.style.color = '#fff'; this.disabled = false; this.focus(); }, 2500); return; }
+                if (inputVal === 'YD0AAI') { this.value = 'INTERCEPT: -.. . .- -..'; this.style.color = '#00ffff'; this.disabled = true; setTimeout(() => { this.value = ''; this.style.color = '#fff'; this.disabled = false; this.focus(); }, 2500); return; }
+                if (inputVal === 'KETER') { this.value = 'INITIATING SITE LOCKDOWN...'; this.style.color = '#ff0000'; this.disabled = true; authScreen.style.backgroundColor = '#4a0000'; setTimeout(() => { this.value = ''; this.style.color = '#fff'; this.disabled = false; authScreen.style.backgroundColor = '#050505'; this.focus(); }, 2500); return; }
 
-                
-                if (inputVal === 'O-5' || inputVal === 'O5') {
-                    o5Data.style.display = 'block';
-                    stamp.innerText = 'O5 ONLY';
-                    stamp.style.color = '#fff';
-                    stamp.style.borderColor = '#fff';
-                    stamp.style.background = '#c00';
-                }
+                if (inputVal === 'O-5' || inputVal === 'O5') { o5Data.style.display = 'block'; stamp.innerText = 'O5 ONLY'; stamp.style.color = '#fff'; stamp.style.borderColor = '#fff'; stamp.style.background = '#c00'; }
 
-                
                 this.value = 'AUTHORIZATION ACCEPTED. DECRYPTING...';
-                this.disabled = true;
-                this.style.color = '#00ff00';
+                this.disabled = true; this.style.color = '#00ff00';
                 
                 setTimeout(() => {
                     authScreen.style.opacity = '0';
-                    
                     setTimeout(() => {
                         authScreen.style.display = 'none';
                         mainContent.style.display = 'block';
                         mainContent.style.opacity = '1';
-                        
-                  
                         docElements.forEach((el, index) => {
-                            setTimeout(() => {
-                                el.style.transition = 'opacity 0.1s ease-in';
-                                el.style.opacity = '1';
-                            }, 300 + (index * 250)); 
+                            setTimeout(() => { el.style.transition = 'opacity 0.1s ease-in'; el.style.opacity = '1'; }, 300 + (index * 250));
                         });
-
                     }, 500);
                 }, 1200);
             }
