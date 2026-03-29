@@ -6,11 +6,18 @@
     <title>SCP Foundation | Personnel Database</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-            font-family: 'Courier New', Courier, monospace; 
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; }
+
+        /* --- CRT SCANLINE EFFECT --- */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 1000;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
         }
 
         body {
@@ -43,175 +50,80 @@
             padding: 30px;
             background: #0a0a0a;
             box-shadow: 0 0 15px rgba(255, 0, 0, 0.1);
+            animation: flicker 0.15s infinite; /* Subtle terminal flicker */
         }
 
-        .scp-logo-text {
-            text-align: center;
-            font-weight: bold;
-            font-size: 20px;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-            color: #fff;
+        @keyframes flicker {
+            0% { opacity: 0.97; }
+            50% { opacity: 1; }
+            100% { opacity: 0.98; }
         }
 
-        .warning-text {
-            color: #ff3333;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-        }
-
-        .terminal-line { margin-bottom: 10px; font-size: 14px; }
-        
-        .input-line {
-            display: flex;
-            align-items: center;
-            margin-top: 20px;
-            border-top: 1px solid #333;
-            padding-top: 20px;
-        }
-
+        .scp-logo-text { text-align: center; font-weight: bold; font-size: 20px; margin-bottom: 20px; letter-spacing: 2px; color: #fff; }
+        .warning-text { color: #ff3333; font-weight: bold; text-align: center; margin-bottom: 30px; text-transform: uppercase; }
+        .input-line { display: flex; align-items: center; margin-top: 20px; border-top: 1px solid #333; padding-top: 20px; }
         .input-line span { color: #ff3333; margin-right: 10px; font-weight: bold;}
         
         input[type="text"] {
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 16px;
-            width: 100%;
-            outline: none;
-            text-transform: uppercase;
-            font-family: 'Courier New', Courier, monospace;
+            background: transparent; border: none; color: #fff; font-size: 16px; width: 100%;
+            outline: none; text-transform: uppercase; font-family: 'Courier New', Courier, monospace;
         }
 
-        #main-content {
-            display: none;
-            opacity: 0;
-            transition: opacity 1s ease;
-            width: 100%;
-            max-width: 500px;
-        }
+        #main-content { display: none; opacity: 0; transition: opacity 1s ease; width: 100%; max-width: 500px; padding-bottom: 50px; }
 
         .document-card {
-            background-color: #e5e5e5;
-            color: #111;
-            border: 2px solid #111;
-            padding: 30px;
-            position: relative;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            background-color: #e5e5e5; color: #111; border: 2px solid #111;
+            padding: 30px; position: relative; box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
         }
 
-        .doc-header {
-            border-bottom: 3px double #111;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
+        .doc-header { border-bottom: 3px double #111; padding-bottom: 15px; margin-bottom: 20px; text-align: center; }
         .doc-header h1 { font-size: 22px; text-transform: uppercase; letter-spacing: 2px;}
-        .doc-header p { font-size: 12px; font-weight: bold; margin-top: 5px; }
 
         .classified-stamp {
-            position: absolute;
-            top: 20px; right: 20px;
-            color: #c00;
-            border: 2px solid #c00;
-            padding: 5px 10px;
-            font-weight: bold;
-            font-size: 18px;
-            transform: rotate(15deg);
-            opacity: 0.8;
-            letter-spacing: 2px;
+            position: absolute; top: 20px; right: 20px; color: #c00; border: 2px solid #c00;
+            padding: 5px 10px; font-weight: bold; font-size: 18px; transform: rotate(15deg); opacity: 0.8;
         }
 
-        .profile-pic {
-            width: 140px; 
-            height: 140px; 
-            border: 3px solid #111;
-            object-fit: cover; 
-            margin: 0 auto 20px; 
-            display: block;
-            filter: grayscale(100%) contrast(1.5);
-        }
-
-        .data-field {
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-        
+        .profile-pic { width: 140px; height: 140px; border: 3px solid #111; object-fit: cover; margin: 0 auto 20px; display: block; filter: grayscale(100%) contrast(1.5); }
+        .data-field { margin-bottom: 10px; font-size: 14px; }
         .data-field strong { background: #111; color: #fff; padding: 2px 6px; margin-right: 8px;}
 
-        .bio-text { 
-            font-size: 13px; 
-            line-height: 1.6; 
-            margin: 20px 0; 
-            text-align: justify;
-            border-left: 3px solid #111;
-            padding-left: 15px;
-        }
+        .bio-text { font-size: 13px; line-height: 1.6; margin: 20px 0; text-align: justify; border-left: 3px solid #111; padding-left: 15px; }
 
+        /* --- CLICKABLE REDACTION --- */
         .redacted {
-            background-color: #111;
-            color: #111;
-            padding: 0 5px;
-            user-select: none;
+            background-color: #111; color: #111; padding: 0 5px; cursor: pointer; transition: background 0.3s;
         }
+        .redacted:hover { background-color: #444; }
+        .redacted.revealed { background-color: transparent; color: inherit; cursor: default; }
 
-        
-        #o5-clearance-data {
-            display: none; 
-            margin: 20px 0;
-            padding-top: 20px;
-            border-top: 2px dashed #c00;
-            font-size: 13px;
-            line-height: 1.6;
-            text-align: justify;
-        }
+        #o5-clearance-data { display: none; margin: 20px 0; padding-top: 20px; border-top: 2px dashed #c00; font-size: 13px; line-height: 1.6; }
+        #o5-clearance-data strong { color: #c00; }
 
-        #o5-clearance-data strong {
-            color: #c00;
-        }
-
-        .social-links { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 10px; 
-            margin-top: 25px;
-            border-top: 1px dashed #111;
-            padding-top: 20px;
-        }
-
+        .social-links { display: flex; flex-direction: column; gap: 10px; margin-top: 25px; border-top: 1px dashed #111; padding-top: 20px; }
         .social-btn {
-            display: flex; 
-            align-items: center; 
-            background-color: #fff;
-            color: #111; 
-            text-decoration: none; 
-            padding: 12px;
-            border: 1px solid #111; 
-            font-weight: bold; 
-            font-size: 13px; 
-            text-transform: uppercase;
-            transition: all 0.2s ease;
+            display: flex; align-items: center; background-color: #fff; color: #111; 
+            text-decoration: none; padding: 12px; border: 1px solid #111; font-weight: bold; 
+            font-size: 13px; text-transform: uppercase; transition: all 0.2s ease;
         }
+        .social-btn:hover { background-color: #111; color: #fff; }
 
-        .social-btn i { margin-right: 15px; font-size: 1.2em; }
-
-        .social-btn:hover { 
-            background-color: #111; 
-            color: #fff;
+        /* --- LIVE SITE CLOCK --- */
+        #site-clock {
+            position: fixed; bottom: 10px; right: 10px; font-size: 10px; color: #555; letter-spacing: 1px; z-index: 1001;
         }
     </style>
 </head>
 <body>
 
+    <div id="site-clock">SITE-ID-TIME: --:--:--</div>
+
     <div id="auth-screen">
         <div class="auth-container">
             <div class="scp-logo-text">SCP FOUNDATION</div>
             <div class="warning-text">WARNING: CLASSIFIED PERSONNEL DATABASE</div>
-            <p class="terminal-line">SITE-ID: ID-JKT-TIMUR</p>
-            <p class="terminal-line">Enter credentials to access personnel records.</p>
+            <p style="font-size: 12px; margin-bottom: 5px;">LOCATION: JAKARTA_TIMUR_SECTOR</p>
+            <p style="font-size: 12px;">STATUS: <span style="color: #00ff00;">ONLINE</span></p>
             <div class="input-line">
                 <span>ENTER KEY:</span>
                 <input type="text" id="passkey" autocomplete="off" autofocus>
@@ -222,7 +134,6 @@
     <div id="main-content">
         <div class="document-card">
             <div class="classified-stamp" id="clearance-stamp">LEVEL 4</div>
-            
             <div class="doc-header">
                 <h1>DR. JASON STEVAN LAY</h1>
                 <p>LEAD RESEARCHER | APPLIED METAPHYSICS</p>
@@ -231,14 +142,14 @@
             <img src="https://i.ibb.co.com/mC8Gq1zx/18095880619613418.jpg" alt="Personnel Photo" class="profile-pic">
             
             <div class="data-field"><strong>CLEARANCE:</strong> Level 4</div>
-            <div class="data-field"><strong>LOCATION:</strong> East Jakarta Sector</div>
+            <div class="data-field"><strong>CALLSIGN:</strong> YD0AAI</div>
             
             <p class="bio-text">
-                <strong>PROFILE:</strong> Jason's primary directive involves the excavation and containment of anomalous subterranean transit networks within the digital Euclidean space "The Zone". When not conducting high-velocity tactical ballistic simulations (Airsoft), personnel operates strictly monitored high-frequency RF transmission equipment (ORARI Callsign: YD0AAI) to intercept atmospheric anomalies. To prevent total psychological collapse during these operations, personnel is strictly tethered to a Class-A biological feline monitor (Designation: Matjupri; Grey Tabby; Green Eyes).
+                <strong>PROFILE:</strong> Dr. Lay's primary directive involves the excavation of subterranean networks within digital Euclidean space <span class="redacted" onclick="this.classList.add('revealed')">"The Zone" / Minecraft</span>. When not conducting tactical simulations <span class="redacted" onclick="this.classList.add('revealed')">(Airsoft)</span>, personnel operates high-frequency RF equipment to intercept atmospheric anomalies. Subject is currently under supervision by Class-A biological unit <span class="redacted" onclick="this.classList.add('revealed')">Matjupri (Grey Tabby)</span>.
             </p>
 
             <div id="o5-clearance-data">
-                <strong>ADDENDUM [O5-COMMAND ONLY]:</strong> Subject exhibits obsessive psychological fixation on simulated irradiated exclusion zones (S.T.A.L.K.E.R. protocol) and bio-organic weapon containment failure scenarios (Resident Evil protocol). Do not engage subject on these topics unless properly armed and briefed.
+                <strong>ADDENDUM [O5-COMMAND]:</strong> Subject exhibits obsessive psychological fixation on simulated irradiated exclusion zones <span class="redacted" onclick="this.classList.add('revealed')">(S.T.A.L.K.E.R.)</span> and bio-organic failure scenarios <span class="redacted" onclick="this.classList.add('revealed')">(Resident Evil)</span>. 
             </div>
 
             <div class="social-links">
@@ -262,39 +173,34 @@
         const o5Data = document.getElementById('o5-clearance-data');
         const stamp = document.getElementById('clearance-stamp');
 
+        // Site Clock Logic
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('site-clock').innerText = "SITE-ID-TIME: " + now.toLocaleTimeString();
+        }, 1000);
+
         passkeyInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                
                 const inputVal = this.value.trim().toUpperCase();
-                
                 if (inputVal !== '') {
-                    
                     if (inputVal === 'O-5' || inputVal === 'O5') {
                         o5Data.style.display = 'block';
                         stamp.innerText = 'O5 ONLY';
                     }
-
                     this.value = 'CREDENTIALS ACCEPTED. DECRYPTING...';
                     this.disabled = true;
                     this.style.color = '#00ff00';
-
                     setTimeout(() => {
                         authScreen.style.opacity = '0';
-                        
                         setTimeout(() => {
                             authScreen.style.display = 'none';
                             mainContent.style.display = 'block';
-                            
-                            setTimeout(() => {
-                                mainContent.style.opacity = '1';
-                            }, 50);
-                            
+                            setTimeout(() => { mainContent.style.opacity = '1'; }, 50);
                         }, 500);
                     }, 1000);
                 }
             }
         });
     </script>
-
 </body>
 </html>
