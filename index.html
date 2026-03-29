@@ -8,56 +8,26 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; }
 
-        body::before {
-            content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            z-index: 1000; background-size: 100% 2px, 3px 100%; pointer-events: none;
-        }
-
-        .scanline {
-            width: 100%; height: 100px; z-index: 9999; position: fixed; pointer-events: none;
-            background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(200,200,200,0.1) 50%, rgba(0,0,0,0) 100%);
-            animation: scan 6s linear infinite;
-        }
-
+        body::before { content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); z-index: 1000; background-size: 100% 2px, 3px 100%; pointer-events: none; }
+        .scanline { width: 100%; height: 100px; z-index: 9999; position: fixed; pointer-events: none; background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(200,200,200,0.1) 50%, rgba(0,0,0,0) 100%); animation: scan 6s linear infinite; }
         @keyframes scan { 0% { top: -100px; } 100% { top: 100vh; } }
 
-        body {
-            background-color: #050505; color: #d4d4d4; display: flex; justify-content: center; 
-            align-items: center; min-height: 100vh; padding: 20px; overflow-y: auto;
-        }
+        body { background-color: #050505; color: #d4d4d4; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; overflow-y: auto; }
 
-        #bios-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #000; color: #d4d4d4; z-index: 10000;
-            padding: 20px; font-size: 14px; display: flex; flex-direction: column;
-            justify-content: flex-start; align-items: flex-start;
-            transition: opacity 0.5s ease;
-        }
+        #bios-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000; color: #d4d4d4; z-index: 10000; padding: 20px; font-size: 14px; display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; transition: opacity 0.5s ease; }
         .bios-line { opacity: 0; margin-bottom: 4px; text-shadow: 0 0 2px #d4d4d4; }
 
-        #auth-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #050505; 
-            display: none; flex-direction: column; justify-content: center; align-items: center; 
-            z-index: 999; transition: opacity 0.5s ease, background-color 0.2s ease; opacity: 0;
-        }
-
-        .auth-container {
-            width: 90%; max-width: 600px; border: 1px solid #333; padding: 30px;
-            background: #0a0a0a; box-shadow: 0 0 15px rgba(255, 0, 0, 0.1); animation: flicker 0.15s infinite;
-        }
-
+        #auth-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #050505; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 999; transition: opacity 0.5s ease, background-color 0.2s ease; opacity: 0; }
+        .auth-container { width: 90%; max-width: 600px; border: 1px solid #333; padding: 30px; background: #0a0a0a; box-shadow: 0 0 15px rgba(255, 0, 0, 0.1); animation: flicker 0.15s infinite; }
         @keyframes flicker { 0% { opacity: 0.97; } 50% { opacity: 1; } 100% { opacity: 0.98; } }
 
         .scp-logo-text { text-align: center; font-weight: bold; font-size: 20px; margin-bottom: 20px; letter-spacing: 2px; color: #fff; }
         .warning-text { color: #ff3333; font-weight: bold; text-align: center; margin-bottom: 30px; text-transform: uppercase; }
         .input-line { display: flex; align-items: center; margin-top: 20px; border-top: 1px solid #333; padding-top: 20px; }
         .input-line span { color: #ff3333; margin-right: 10px; font-weight: bold;}
-        
         input[type="text"] { background: transparent; border: none; color: #fff; font-size: 16px; width: 100%; outline: none; text-transform: uppercase; font-family: 'Courier New', Courier, monospace; }
 
         #main-content { display: none; opacity: 0; transition: opacity 1s ease; width: 100%; max-width: 500px; padding-bottom: 80px; }
-
         .document-card { background-color: #e5e5e5; color: #111; border: 2px solid #111; padding: 30px; position: relative; box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); }
         .doc-header { border-bottom: 3px double #111; padding-bottom: 15px; margin-bottom: 20px; text-align: center; }
         .doc-header h1 { font-size: 22px; text-transform: uppercase; letter-spacing: 2px;}
@@ -71,82 +41,15 @@
 
         .redacted { background-color: #111; color: #111; padding: 0 5px; cursor: pointer; transition: background 0.3s; user-select: none; }
         .redacted:hover { background-color: #444; }
-
-        @keyframes digital-glitch {
-            0% { background-color: #111; color: #111; transform: translate(0); }
-            20% { background-color: #c00; color: #fff; transform: translate(-2px, 1px); }
-            40% { background-color: #fff; color: #000; transform: translate(2px, -1px); }
-            60% { background-color: #111; color: #111; transform: translate(-1px, 2px); }
-            80% { background-color: #c00; color: #fff; transform: translate(1px, -2px); }
-            100% { background-color: transparent; color: inherit; transform: translate(0); }
-        }
+        @keyframes digital-glitch { 0% { background-color: #111; color: #111; transform: translate(0); } 20% { background-color: #c00; color: #fff; transform: translate(-2px, 1px); } 40% { background-color: #fff; color: #000; transform: translate(2px, -1px); } 60% { background-color: #111; color: #111; transform: translate(-1px, 2px); } 80% { background-color: #c00; color: #fff; transform: translate(1px, -2px); } 100% { background-color: transparent; color: inherit; transform: translate(0); } }
         .redacted.revealed { animation: digital-glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; cursor: default; }
 
-        .collapsible-btn {
-            background-color: #111; color: #fff; cursor: pointer; padding: 12px; width: 100%;
-            border: 2px solid #111; text-align: left; outline: none; font-size: 14px;
-            font-weight: bold; margin-top: 10px; transition: 0.3s; text-transform: uppercase;
-            font-family: 'Courier New', Courier, monospace;
-        }
+        .collapsible-btn { background-color: #111; color: #fff; cursor: pointer; padding: 12px; width: 100%; border: 2px solid #111; text-align: left; outline: none; font-size: 14px; font-weight: bold; margin-top: 10px; transition: 0.3s; text-transform: uppercase; font-family: 'Courier New', Courier, monospace; }
         .collapsible-btn:hover, .collapsible-btn.active { background-color: #c00; color: #fff; border-color: #c00; }
         .collapsible-btn::after { content: '[+]'; float: right; color: inherit; }
         .collapsible-btn.active::after { content: '[-]'; }
+        .timeline-wrapper { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; background: #d9d9d9; border-left: 2px solid #111; border-right: 2px solid #111; border-bottom: 2px solid #111; margin-top: -2px; }
 
-        .timeline-wrapper {
-            max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out;
-            background: #d9d9d9; border-left: 2px solid #111; border-right: 2px solid #111; border-bottom: 2px solid #111;
-            margin-top: -2px;
-        }
-        
-        .timeline { border-left: 2px dashed #111; margin: 20px 20px 20px 30px; padding-left: 15px; }
-        .timeline-item { margin-bottom: 20px; position: relative; }
-        .timeline-item:last-child { margin-bottom: 0; }
-        .timeline-item::before { content: ''; position: absolute; left: -21px; top: 0; width: 10px; height: 10px; background: #c00; border: 2px solid #111; border-radius: 50%; }
-        .timeline-date { font-weight: bold; color: #c00; font-size: 12px; margin-bottom: 5px; }
-        .timeline-text { font-size: 13px; color: #111; line-height: 1.5; text-align: justify; }
-
-        .tactical-map-container { background: #050505; border: 2px solid #111; margin: 15px; height: 280px; display: flex; flex-direction: column; overflow: hidden; }
-        .iso-wrapper { flex-grow: 1; display: flex; justify-content: center; align-items: center; perspective: 800px; overflow: hidden; }
-        .iso-grid {
-            width: 250px; height: 250px; background: rgba(0, 255, 0, 0.05); border: 1px solid rgba(0, 255, 0, 0.3); transform: rotateX(60deg) rotateZ(-45deg);
-            position: relative; box-shadow: 0 0 30px rgba(0, 255, 0, 0.1); background-image: linear-gradient(rgba(0, 255, 0, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 0, 0.2) 1px, transparent 1px);
-            background-size: 25px 25px; transition: transform 0.5s ease;
-        }
-        .iso-grid:hover { transform: rotateX(50deg) rotateZ(-35deg) scale(1.1); }
-        .map-node { position: absolute; width: 12px; height: 12px; background: #f00; border-radius: 50%; transform: translate(-50%, -50%) rotateX(-60deg) rotateZ(45deg); cursor: crosshair; box-shadow: 0 0 10px #f00; animation: pulse 1.5s infinite; transition: 0.2s; }
-        .map-node:hover { background: #fff; box-shadow: 0 0 15px #fff; transform: translate(-50%, -50%) rotateX(-60deg) rotateZ(45deg) scale(1.5); }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); } }
-        .map-readout { background: #111; color: #0f0; padding: 10px; font-size: 11px; font-family: monospace; border-top: 1px solid #333; height: 40px; display: flex; align-items: center; }
-
-        #o5-clearance-data { display: none; margin: 20px 0; padding-top: 20px; border-top: 2px dashed #c00; font-size: 13px; line-height: 1.6; }
-        #o5-clearance-data strong { color: #c00; }
-
-        .social-links { display: flex; flex-direction: column; gap: 10px; margin-top: 25px; border-top: 1px dashed #111; padding-top: 20px; }
-        .social-btn { display: flex; align-items: center; background-color: #fff; color: #111; text-decoration: none; padding: 12px; border: 1px solid #111; font-weight: bold; font-size: 13px; text-transform: uppercase; transition: all 0.2s ease; cursor: pointer; }
-        .social-btn:hover { background-color: #111; color: #fff; }
-        #site-clock { position: fixed; bottom: 12px; right: 10px; font-size: 10px; color: #555; letter-spacing: 1px; z-index: 1001; }
-
-        #memetic-kill {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: repeating-radial-gradient(circle, #000, #000 15px, #fff 15px, #fff 30px);
-            z-index: 10000; justify-content: center; align-items: center; flex-direction: column;
-            animation: spin-strobe 0.15s linear infinite;
-        }
-        .memetic-text { background: #000; color: #f00; padding: 20px 40px; font-size: 2.5rem; border: 5px solid #f00; font-weight: bold; text-align: center; text-transform: uppercase; box-shadow: 0 0 50px #f00; }
-        @keyframes spin-strobe { 0% { filter: invert(0) hue-rotate(0deg); transform: scale(1); } 50% { filter: invert(1) hue-rotate(180deg); transform: scale(1.05); } 100% { filter: invert(0) hue-rotate(360deg); transform: scale(1); } }
-
-        #dev-console {
-            position: fixed; top: -50vh; left: 0; width: 100%; height: 40vh; background: rgba(0, 0, 0, 0.95);
-            border-bottom: 2px solid #00ff00; z-index: 99999; padding: 15px; display: flex; flex-direction: column;
-            transition: top 0.3s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 10px 30px rgba(0,255,0,0.1);
-        }
-        #dev-console.active { top: 0; }
-        #console-output { flex-grow: 1; overflow-y: auto; color: #00ff00; font-size: 12px; margin-bottom: 10px; white-space: pre-wrap; word-wrap: break-word; }
-        .console-input-wrapper { display: flex; align-items: center; border-top: 1px dashed #333; padding-top: 10px; }
-        .console-input-wrapper span { color: #00ff00; margin-right: 10px; }
-        #console-input { background: transparent; border: none; color: #00ff00; font-size: 14px; width: 100%; outline: none; text-transform: lowercase; }
-
-        /* --- NEW FEATURE STYLES --- */
         .access-log { padding: 15px; font-family: monospace; font-size: 11px; background: #0a0a0a; color: #0f0; height: 150px; overflow-y: auto; border-top: 1px solid #333; }
         .log-entry { margin-bottom: 5px; border-bottom: 1px dashed #333; padding-bottom: 5px; }
         .log-time { color: #888; }
@@ -156,8 +59,51 @@
         .clearance-L1 { color: #ffaa00; }
         .clearance-L4 { color: #00ff00; }
 
-        #sanity-container { position: fixed; bottom: 0; left: 0; width: 100%; height: 6px; background: #111; z-index: 1000; }
-        #sanity-bar { height: 100%; width: 100%; background: #0f0; transition: width 1s linear, background 0.5s ease; }
+        .timeline { border-left: 2px dashed #111; margin: 20px 20px 20px 30px; padding-left: 15px; }
+        .timeline-item { margin-bottom: 20px; position: relative; }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-item::before { content: ''; position: absolute; left: -21px; top: 0; width: 10px; height: 10px; background: #c00; border: 2px solid #111; border-radius: 50%; }
+        .timeline-date { font-weight: bold; color: #c00; font-size: 12px; margin-bottom: 5px; }
+        .timeline-text { font-size: 13px; color: #111; line-height: 1.5; text-align: justify; }
+
+        .tactical-map-container { background: #050505; border: 2px solid #111; margin: 15px; height: 280px; display: flex; flex-direction: column; overflow: hidden; }
+        .iso-wrapper { flex-grow: 1; display: flex; justify-content: center; align-items: center; perspective: 800px; overflow: hidden; }
+        .iso-grid { width: 250px; height: 250px; background: rgba(0, 255, 0, 0.05); border: 1px solid rgba(0, 255, 0, 0.3); transform: rotateX(60deg) rotateZ(-45deg); position: relative; box-shadow: 0 0 30px rgba(0, 255, 0, 0.1); background-image: linear-gradient(rgba(0, 255, 0, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 0, 0.2) 1px, transparent 1px); background-size: 25px 25px; transition: transform 0.5s ease; }
+        .iso-grid:hover { transform: rotateX(50deg) rotateZ(-35deg) scale(1.1); }
+        .map-node { position: absolute; width: 12px; height: 12px; background: #f00; border-radius: 50%; transform: translate(-50%, -50%) rotateX(-60deg) rotateZ(45deg); cursor: crosshair; box-shadow: 0 0 10px #f00; animation: pulse 1.5s infinite; transition: 0.2s; }
+        .map-node:hover { background: #fff; box-shadow: 0 0 15px #fff; transform: translate(-50%, -50%) rotateX(-60deg) rotateZ(45deg) scale(1.5); }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); } }
+        .map-readout { background: #111; color: #0f0; padding: 10px; font-size: 11px; font-family: monospace; border-top: 1px solid #333; height: 40px; display: flex; align-items: center; }
+
+      
+        .cctv-screen { background: #1a1a1a; margin: 15px; height: 180px; position: relative; overflow: hidden; border: 3px solid #050505; box-shadow: inset 0 0 20px #000; }
+        .cctv-static { position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: repeating-radial-gradient(#000 0.0001%, #ffffff 0.0002%); opacity: 0.12; animation: staticAnim 0.1s infinite; z-index: 1; pointer-events: none; }
+        @keyframes staticAnim { 0% { transform: translate(0,0); } 100% { transform: translate(5px, 5px); } }
+        .cctv-overlay { position: absolute; top: 10px; left: 10px; color: #fff; font-family: monospace; font-size: 12px; z-index: 2; text-shadow: 1px 1px 0 #000; }
+        .cctv-rec { color: red; animation: blink 1s infinite; font-weight: bold; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
+        .cctv-entity { position: absolute; bottom: 20px; right: 30px; width: 40px; height: 30px; background: rgba(255,255,255,0.05); border-radius: 40% 40% 10% 10%; filter: blur(2px); transition: all 3s ease; }
+        
+        .telemetry-board { background: #050505; color: #00ffff; font-family: monospace; padding: 15px; margin: 15px; border: 1px solid #333; font-size: 12px; line-height: 1.8; }
+        .tele-row { display: flex; justify-content: space-between; border-bottom: 1px dashed #222; margin-bottom: 5px; }
+
+        #o5-clearance-data { display: none; margin: 20px 0; padding-top: 20px; border-top: 2px dashed #c00; font-size: 13px; line-height: 1.6; }
+        #o5-clearance-data strong { color: #c00; }
+
+        .social-links { display: flex; flex-direction: column; gap: 10px; margin-top: 25px; border-top: 1px dashed #111; padding-top: 20px; }
+        .social-btn { display: flex; align-items: center; background-color: #fff; color: #111; text-decoration: none; padding: 12px; border: 1px solid #111; font-weight: bold; font-size: 13px; text-transform: uppercase; transition: all 0.2s ease; cursor: pointer; }
+        .social-btn:hover { background-color: #111; color: #fff; }
+        #site-clock { position: fixed; bottom: 12px; right: 10px; font-size: 10px; color: #555; letter-spacing: 1px; z-index: 1001; }
+
+        #memetic-kill { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: repeating-radial-gradient(circle, #000, #000 15px, #fff 15px, #fff 30px); z-index: 10000; justify-content: center; align-items: center; flex-direction: column; animation: spin-strobe 0.15s linear infinite; }
+        .memetic-text { background: #000; color: #f00; padding: 20px 40px; font-size: 2.5rem; border: 5px solid #f00; font-weight: bold; text-align: center; text-transform: uppercase; box-shadow: 0 0 50px #f00; }
+
+        #dev-console { position: fixed; top: -50vh; left: 0; width: 100%; height: 40vh; background: rgba(0, 0, 0, 0.95); border-bottom: 2px solid #00ff00; z-index: 99999; padding: 15px; display: flex; flex-direction: column; transition: top 0.3s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 10px 30px rgba(0,255,0,0.1); }
+        #dev-console.active { top: 0; }
+        #console-output { flex-grow: 1; overflow-y: auto; color: #00ff00; font-size: 12px; margin-bottom: 10px; white-space: pre-wrap; word-wrap: break-word; }
+        .console-input-wrapper { display: flex; align-items: center; border-top: 1px dashed #333; padding-top: 10px; }
+        .console-input-wrapper span { color: #00ff00; margin-right: 10px; }
+        #console-input { background: transparent; border: none; color: #00ff00; font-size: 14px; width: 100%; outline: none; text-transform: lowercase; }
     </style>
 </head>
 <body>
@@ -179,7 +125,6 @@ Type 'help' for a list of available directives.
     </div>
 
     <div class="scanline"></div>
-    <div id="sanity-container"><div id="sanity-bar"></div></div>
     <div id="site-clock">SITE-ID-TIME: --:--:--</div>
 
     <div id="auth-screen">
@@ -209,30 +154,34 @@ Type 'help' for a list of available directives.
             <div class="data-field"><strong>CALLSIGN:</strong> YD0AAI</div>
             
             <p class="bio-text">
-                <strong>PROFILE:</strong> Subject is a Level 4 software developer stationed at Sector Jakarta Timur. Primary competencies involve architectural coding and digital environment structuring <span class="redacted" onclick="this.classList.add('revealed')">(Game Dev)</span>. Field combat exercises are strictly limited to kinetic simulation environments <span class="redacted" onclick="this.classList.add('revealed')">(Airsoft)</span>. Subject dedicates extensive off-duty cycles to Euclidean voxel manipulation <span class="redacted" onclick="this.classList.add('revealed')">(Minecraft)</span> and HAM radio operations. Cohabitation with one (1) non-anomalous feline entity designated 'Matjupri' is authorized and monitored.
+                <strong>PROFILE:</strong> Subject is a Level 4 software developer stationed at Sector Jakarta Timur. Primary competencies involve architectural coding and digital environment structuring <span class="redacted" onclick="this.classList.add('revealed')">(Game Dev)</span>. Field combat exercises are strictly limited to kinetic simulation environments <span class="redacted" onclick="this.classList.add('revealed')">(Airsoft)</span>. Subject dedicates extensive off-duty cycles to Euclidean voxel manipulation <span class="redacted" onclick="this.classList.add('revealed')">(Minecraft)</span> and hardware telemetry routing. Cohabitation with one (1) non-anomalous feline entity designated 'Matjupri' is authorized.
             </p>
+
+            <button class="collapsible-btn">ACCESS SURVEILLANCE FEED [MATJUPRI]</button>
+            <div class="timeline-wrapper">
+                <div class="cctv-screen">
+                    <div class="cctv-static"></div>
+                    <div class="cctv-overlay">
+                        <span class="cctv-rec">● REC</span> CAM_04 // SECTOR ALPHA<br>
+                        <span id="cctv-time">--:--:--</span>
+                    </div>
+                    <div class="cctv-entity" id="cat-entity"></div>
+                </div>
+            </div>
+
+            <button class="collapsible-btn">VIEW LIVE HARDWARE TELEMETRY</button>
+            <div class="timeline-wrapper">
+                <div class="telemetry-board">
+                    <div class="tele-row"><span>ARDUINO LOGIC_V:</span><span id="t-volt">5.02v</span></div>
+                    <div class="tele-row"><span>PELTIER CORE_TEMP:</span><span id="t-temp">14.2°C</span></div>
+                    <div class="tele-row"><span>YD0AAI RF_NOISE:</span><span id="t-rf">-84 dBm</span></div>
+                    <div class="tele-row"><span>SYSTEM LOAD:</span><span id="t-load">24%</span></div>
+                </div>
+            </div>
 
             <button class="collapsible-btn">VIEW TERMINAL ACCESS LOG</button>
             <div class="timeline-wrapper">
                 <div class="access-log" id="access-log-container"></div>
-            </div>
-
-            <button class="collapsible-btn">EXPAND CHRONOLOGICAL LOG</button>
-            <div class="timeline-wrapper">
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-date">AGE 08 | INCIDENT ZERO</div>
-                        <div class="timeline-text">Subject demonstrated premature aptitude for algorithmic logic and syntax manipulation. Early exposure to coding environments fundamentally altered cognitive processing.</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">2022 - 2025 | PHASE I</div>
-                        <div class="timeline-text">Assigned to facility <strong>SMPN 252</strong> for preliminary cognitive conditioning. Subject maintained baseline parameters while expanding private digital archives.</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">PRESENT | PHASE II</div>
-                        <div class="timeline-text">Transferred to high-yield facility <strong>SMKN 65</strong> for advanced vocational structuring. Current operational focus shifted toward software architecture.</div>
-                    </div>
-                </div>
             </div>
 
             <button class="collapsible-btn">ACCESS TACTICAL SECTOR MAP</button>
@@ -270,35 +219,23 @@ Type 'help' for a list of available directives.
 
     <script>
         
+       
         const biosScreen = document.getElementById('bios-screen');
         const authScreen = document.getElementById('auth-screen');
         const passkeyInput = document.getElementById('passkey');
         
         const biosSequence = [
-            "SCP BIOS (C) 2026 Foundation Sector-JT",
-            "BIOS Date 03/29/26 Ver 4.2.19",
-            "CPU: Hexa-Core Metaphysical Processor, Speed: 3.4 GHz",
-            "Memory Test: 640000K OK",
-            "",
-            "Initializing Euclidean Voxel Render Engine... [OK]",
-            "Mounting Drive C: [O5-CLASSIFIED]... [OK]",
-            "Scanning for localized anomalies...",
-            "--> 1 Entity Found: 'Matjupri' (Class: Feline, Status: Dormant)",
-            "Initializing YD0AAI RF Array... [OK]",
-            "",
-            "Booting SCP Foundation Mainframe OS...",
-            "Loading Security Protocols...",
-            "SYSTEM READY."
+            "SCP BIOS (C) 2026 Foundation Sector-JT", "BIOS Date 03/29/26 Ver 4.2.19", "CPU: Hexa-Core Metaphysical Processor, Speed: 3.4 GHz",
+            "Memory Test: 640000K OK", "", "Initializing Euclidean Voxel Render Engine... [OK]", "Mounting Drive C: [O5-CLASSIFIED]... [OK]",
+            "Scanning for localized anomalies...", "--> 1 Entity Found: 'Matjupri' (Class: Feline, Status: Dormant)", "Initializing YD0AAI RF Array... [OK]",
+            "", "Booting SCP Foundation Mainframe OS...", "Loading Security Protocols...", "SYSTEM READY."
         ];
 
         let delay = 0;
-        biosSequence.forEach((text, index) => {
+        biosSequence.forEach((text) => {
             setTimeout(() => {
-                const line = document.createElement('div');
-                line.className = 'bios-line';
-                line.innerText = text;
-                biosScreen.appendChild(line);
-                setTimeout(() => { line.style.opacity = '1'; }, 50);
+                const line = document.createElement('div'); line.className = 'bios-line'; line.innerText = text;
+                biosScreen.appendChild(line); setTimeout(() => { line.style.opacity = '1'; }, 50);
             }, delay);
             delay += text === "" ? 400 : Math.random() * 150 + 100; 
         });
@@ -306,15 +243,12 @@ Type 'help' for a list of available directives.
         setTimeout(() => {
             biosScreen.style.opacity = '0';
             setTimeout(() => {
-                biosScreen.style.display = 'none';
-                authScreen.style.display = 'flex';
-                setTimeout(() => { 
-                    authScreen.style.opacity = '1'; 
-                    passkeyInput.focus(); 
-                }, 100);
+                biosScreen.style.display = 'none'; authScreen.style.display = 'flex';
+                setTimeout(() => { authScreen.style.opacity = '1'; passkeyInput.focus(); }, 100);
             }, 500);
         }, delay + 800);
 
+       
         const mainContent = document.getElementById('main-content');
         const o5Data = document.getElementById('o5-clearance-data');
         const stamp = document.getElementById('clearance-stamp');
@@ -326,7 +260,9 @@ Type 'help' for a list of available directives.
         const consoleOutput = document.getElementById('console-output');
 
         setInterval(() => {
-            const now = new Date(); document.getElementById('site-clock').innerText = "SITE-ID-TIME: " + now.toLocaleTimeString();
+            const now = new Date();
+            document.getElementById('site-clock').innerText = "SITE-ID-TIME: " + now.toLocaleTimeString();
+            document.getElementById('cctv-time').innerText = now.toLocaleTimeString();
         }, 1000);
 
         const docElements = document.querySelectorAll('.document-card > *');
@@ -334,8 +270,7 @@ Type 'help' for a list of available directives.
 
         let clickCount = 0;
         profileImg.addEventListener('click', () => {
-            clickCount++;
-            profileImg.style.filter = "grayscale(100%) contrast(2) invert(1)";
+            clickCount++; profileImg.style.filter = "grayscale(100%) contrast(2) invert(1)";
             setTimeout(() => { profileImg.style.filter = "grayscale(100%) contrast(1.5)"; }, 150);
             if (clickCount >= 5) { memeticKill.style.display = 'flex'; }
         });
@@ -343,13 +278,9 @@ Type 'help' for a list of available directives.
         const collapsibles = document.querySelectorAll('.collapsible-btn');
         collapsibles.forEach(btn => {
             btn.addEventListener('click', function() {
-                this.classList.toggle('active');
-                const content = this.nextElementSibling;
-                if (content.style.maxHeight) {
-                    content.style.maxHeight = null;
-                } else {
-                    content.style.maxHeight = content.scrollHeight + "px";
-                }
+                this.classList.toggle('active'); const content = this.nextElementSibling;
+                if (content.style.maxHeight) { content.style.maxHeight = null; } 
+                else { content.style.maxHeight = content.scrollHeight + "px"; }
             });
         });
 
@@ -357,22 +288,17 @@ Type 'help' for a list of available directives.
         const mapReadout = document.getElementById('map-readout');
         mapNodes.forEach(node => {
             node.addEventListener('click', (e) => {
-                const info = e.target.getAttribute('data-info');
-                mapReadout.innerText = "> INTERCEPTING: " + info;
-                mapReadout.style.opacity = '0.5';
-                setTimeout(() => { mapReadout.style.opacity = '1'; }, 100);
+                mapReadout.innerText = "> INTERCEPTING: " + e.target.getAttribute('data-info');
+                mapReadout.style.opacity = '0.5'; setTimeout(() => { mapReadout.style.opacity = '1'; }, 100);
             });
         });
 
+        
         document.addEventListener('keydown', function(e) {
             if (e.key === '`' || e.key === '~') {
-                e.preventDefault();
-                devConsole.classList.toggle('active');
-                if (devConsole.classList.contains('active')) {
-                    setTimeout(() => { consoleInput.focus(); }, 100);
-                } else {
-                    passkeyInput.focus();
-                }
+                e.preventDefault(); devConsole.classList.toggle('active');
+                if (devConsole.classList.contains('active')) { setTimeout(() => { consoleInput.focus(); }, 100); } 
+                else { passkeyInput.focus(); }
             }
         });
 
@@ -384,17 +310,21 @@ Type 'help' for a list of available directives.
         consoleInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 const cmd = this.value.trim().toLowerCase();
-                this.value = '';
-                printToConsole(cmd);
+                this.value = ''; printToConsole(cmd);
 
                 switch(cmd) {
-                    case 'help': printToConsole("Commands: help, clear, ping, locate matjupri, override o5, breach, exit"); break;
+                    case 'help': printToConsole("Commands: help, clear, ping, locate matjupri, override o5, stalker, breach, exit"); break;
                     case 'clear': consoleOutput.innerHTML = "SCP OS Kernel v4.2.19 [Root access granted]\n--------------------------------------------------"; break;
                     case 'ping': printToConsole("PONG. Server Latency: " + Math.floor(Math.random() * 50 + 10) + "ms"); break;
                     case 'locate matjupri': printToConsole("SCANNING... Unit 'Matjupri' (Grey Tabby) located at Sector Alpha coordinates. Status: Dormant. Eye status: Green."); break;
                     case 'override o5': 
                         o5Data.style.display = 'block'; stamp.innerText = 'O5 ONLY'; stamp.style.color = '#fff'; stamp.style.borderColor = '#fff'; stamp.style.background = '#c00';
                         printToConsole("SECURITY BREACH: O5 Addendum successfully decrypted."); break;
+                    case 'stalker':
+                        printToConsole("...ESTABLISHING PDA CONNECTION TO CHORNOBYL EXCLUSION ZONE...");
+                        setTimeout(() => printToConsole("WARNING: EMISSION IMMINENT. FIND COVER IMMEDIATELY."), 1000);
+                        setTimeout(() => printToConsole("Artifact 'Jellyfish' detected 45m North."), 2500);
+                        break;
                     case 'breach': printToConsole("CRITICAL ERROR: MEMETIC HAZARD DEPLOYED."); setTimeout(() => { memeticKill.style.display = 'flex'; devConsole.classList.remove('active'); }, 1000); break;
                     case 'exit': devConsole.classList.remove('active'); break;
                     case '': break;
@@ -421,34 +351,32 @@ Type 'help' for a list of available directives.
                 setTimeout(() => {
                     authScreen.style.opacity = '0';
                     setTimeout(() => {
-                        authScreen.style.display = 'none';
-                        mainContent.style.display = 'block';
-                        mainContent.style.opacity = '1';
-                        docElements.forEach((el, index) => {
-                            setTimeout(() => { el.style.transition = 'opacity 0.1s ease-in'; el.style.opacity = '1'; }, 300 + (index * 250));
-                        });
+                        authScreen.style.display = 'none'; mainContent.style.display = 'block'; mainContent.style.opacity = '1';
+                        docElements.forEach((el, index) => { setTimeout(() => { el.style.transition = 'opacity 0.1s ease-in'; el.style.opacity = '1'; }, 300 + (index * 250)); });
                     }, 500);
                 }, 1200);
             }
         });
 
         
-
-        
-        let sanity = 100;
-        const sanityBar = document.getElementById('sanity-bar');
-        const sanityDrain = setInterval(() => {
+        setInterval(() => {
             if(mainContent.style.display === 'block') {
-                sanity -= 0.5;
-                sanityBar.style.width = sanity + '%';
-                if(sanity <= 50) sanityBar.style.background = '#ffaa00';
-                if(sanity <= 20) sanityBar.style.background = '#ff0000';
-                if(sanity <= 0) {
-                    clearInterval(sanityDrain);
-                    memeticKill.style.display = 'flex';
-                }
+                document.getElementById('t-volt').innerText = (Math.random() * (5.10 - 4.90) + 4.90).toFixed(2) + 'v';
+                document.getElementById('t-temp').innerText = (Math.random() * (15.5 - 13.5) + 13.5).toFixed(1) + '°C';
+                document.getElementById('t-rf').innerText = Math.floor(Math.random() * (-80 - -90) + -90) + ' dBm';
+                document.getElementById('t-load').innerText = Math.floor(Math.random() * (35 - 18) + 18) + '%';
             }
-        }, 1000);
+        }, 800);
+
+       
+        setInterval(() => {
+            const entity = document.getElementById('cat-entity');
+            if(Math.random() > 0.7) {
+                entity.style.right = Math.floor(Math.random() * 80) + 'px';
+                entity.style.bottom = Math.floor(Math.random() * 40) + 'px';
+                entity.style.opacity = Math.random() > 0.5 ? '1' : '0.3';
+            }
+        }, 4000);
 
         
         function getDevice() {
@@ -459,7 +387,6 @@ Type 'help' for a list of available directives.
             if (/Mac/i.test(ua)) return "Desktop OS [macOS Variant]";
             return "Unknown Device Signature";
         }
-        
         const logContainer = document.getElementById('access-log-container');
         if (logContainer) {
             const fakeLogs = [
@@ -467,15 +394,11 @@ Type 'help' for a list of available directives.
                 { time: "09:44 AM", dev: "Desktop OS [Windows Variant]", cl: "Level 1", c: "clearance-L1" },
                 { time: "14:22 PM", dev: "Unknown Device Signature", cl: "Level 4", c: "clearance-L4" }
             ];
-            fakeLogs.forEach(log => {
-                logContainer.innerHTML += `<div class="log-entry"><span class="log-time">[${log.time}]</span> PING: <span class="log-device">${log.dev}</span> | CLEARANCE: <span class="log-clearance ${log.c}">${log.cl}</span></div>`;
-            });
-            const currentDevice = getDevice();
-            const clearances = ["Class-D", "Level 1", "Level 2", "Level 3"];
-            const randomClearance = clearances[Math.floor(Math.random() * clearances.length)];
+            fakeLogs.forEach(log => { logContainer.innerHTML += `<div class="log-entry"><span class="log-time">[${log.time}]</span> PING: <span class="log-device">${log.dev}</span> | CLEARANCE: <span class="log-clearance ${log.c}">${log.cl}</span></div>`; });
+            const randomClearance = ["Class-D", "Level 1", "Level 2", "Level 3"][Math.floor(Math.random() * 4)];
             const clearClass = randomClearance === "Class-D" ? "clearance-D" : "clearance-L1";
             const timeNow = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-            logContainer.innerHTML += `<div class="log-entry" style="background: rgba(0,255,0,0.1);"><span class="log-time">[${timeNow}]</span> PING: <span class="log-device">${currentDevice} (YOU)</span> | CLEARANCE: <span class="log-clearance ${clearClass}">${randomClearance}</span></div>`;
+            logContainer.innerHTML += `<div class="log-entry" style="background: rgba(0,255,0,0.1);"><span class="log-time">[${timeNow}]</span> PING: <span class="log-device">${getDevice()} (YOU)</span> | CLEARANCE: <span class="log-clearance ${clearClass}">${randomClearance}</span></div>`;
         }
 
         
@@ -484,38 +407,21 @@ Type 'help' for a list of available directives.
         if (morseBtn) {
             morseBtn.addEventListener('click', () => {
                 if(morseBtn.classList.contains('playing')) return;
-                morseBtn.classList.add('playing');
-                morseBtn.innerHTML = '<i class="fas fa-satellite-dish fa-spin"></i> [TRANSMITTING YD0AAI...]';
-                
+                morseBtn.classList.add('playing'); morseBtn.innerHTML = '<i class="fas fa-satellite-dish fa-spin"></i> [TRANSMITTING YD0AAI...]';
                 if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const morseStr = "-.-- -.. ----- .- .- .."; // Y D 0 A A I
-                const dotLen = 100; 
-                let timeTracker = audioCtx.currentTime;
-
+                const morseStr = "-.-- -.. ----- .- .- .."; 
+                const dotLen = 100; let timeTracker = audioCtx.currentTime;
                 for(let i=0; i<morseStr.length; i++) {
                     const char = morseStr[i];
                     if(char === ' ') { timeTracker += (dotLen * 3) / 1000; continue; }
-                    
-                    const osc = audioCtx.createOscillator();
-                    const gain = audioCtx.createGain();
-                    osc.type = 'sine'; osc.frequency.value = 600;
-                    osc.connect(gain); gain.connect(audioCtx.destination);
-                    
+                    const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+                    osc.type = 'sine'; osc.frequency.value = 600; osc.connect(gain); gain.connect(audioCtx.destination);
                     const duration = char === '-' ? (dotLen * 3) / 1000 : dotLen / 1000;
-                    
-                    osc.start(timeTracker);
-                    gain.gain.setValueAtTime(0.1, timeTracker);
-                    timeTracker += duration;
-                    gain.gain.setValueAtTime(0, timeTracker);
-                    osc.stop(timeTracker);
-                    
+                    osc.start(timeTracker); gain.gain.setValueAtTime(0.1, timeTracker);
+                    timeTracker += duration; gain.gain.setValueAtTime(0, timeTracker); osc.stop(timeTracker);
                     timeTracker += dotLen / 1000; 
                 }
-                
-                setTimeout(() => {
-                    morseBtn.classList.remove('playing');
-                    morseBtn.innerHTML = '<i class="fas fa-satellite-dish"></i> [INITIATE YD0AAI RF PING]';
-                }, (timeTracker - audioCtx.currentTime) * 1000 + 500);
+                setTimeout(() => { morseBtn.classList.remove('playing'); morseBtn.innerHTML = '<i class="fas fa-satellite-dish"></i> [INITIATE YD0AAI RF PING]'; }, (timeTracker - audioCtx.currentTime) * 1000 + 500);
             });
         }
     </script>
