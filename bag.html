@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forcal | Asset Recovery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; }
+
+        body {
+            background-color: #050505;
+            color: #d4d4d4;
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 20px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        
+        #lockdown-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(10, 0, 0, 0.98);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+            text-align: center;
+            padding: 20px;
+            border: 5px solid #c00;
+        }
+
+        .warning-header { color: #ff3333; font-size: 28px; font-weight: bold; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
+        .warning-sub { color: #fff; font-size: 16px; margin-bottom: 40px; max-width: 400px; line-height: 1.5; }
+        
+        .continue-btn {
+            background-color: #c00;
+            color: #fff;
+            border: 2px solid #ff3333;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 15px rgba(204, 0, 0, 0.4);
+        }
+
+        .continue-btn:hover { background-color: #ff3333; transform: scale(1.05); box-shadow: 0 0 25px rgba(255, 51, 51, 0.8); }
+
+        
+        #main-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .document-card {
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            border: 1px solid #333;
+            border-top: 4px solid #c00;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        }
+
+        .doc-header { border-bottom: 1px dashed #555; padding-bottom: 15px; margin-bottom: 20px; text-align: center; }
+        .doc-header h1 { font-size: 20px; color: #fff; letter-spacing: 1px;}
+        .doc-header p { font-size: 12px; color: #c00; font-weight: bold; margin-top: 5px; }
+
+        .data-field { margin-bottom: 12px; font-size: 14px; }
+        .data-field strong { background: #222; color: #ff3333; padding: 2px 6px; margin-right: 8px; border: 1px solid #444;}
+
+        .bio-text { font-size: 13px; line-height: 1.6; margin: 20px 0; border-left: 2px solid #c00; padding-left: 15px; color: #aaa;}
+
+        
+        details {
+            background: #111;
+            border: 1px solid #333;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        summary {
+            padding: 15px;
+            font-weight: bold;
+            color: #ff3333;
+            cursor: pointer;
+            list-style: none;
+            text-transform: uppercase;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        summary:hover { background: #1a1a1a; }
+        summary::before { content: "[+]"; margin-right: 10px; color: #777; font-family: monospace; }
+        details[open] summary::before { content: "[-]"; color: #fff; }
+        details[open] summary { border-bottom: 1px dashed #333; }
+
+        .med-content { padding: 15px; font-size: 13px; color: #ccc; line-height: 1.6; }
+        .med-content ul { padding-left: 20px; margin-top: 10px; }
+        .med-content li { margin-bottom: 5px; }
+
+        
+        .social-links { display: flex; flex-direction: column; gap: 12px; margin-top: 25px; }
+
+        .social-btn {
+            display: flex; align-items: center; 
+            background-color: #111; color: #ccc; 
+            text-decoration: none; padding: 14px 20px;
+            border: 1px solid #333; border-radius: 4px;
+            font-weight: bold; font-size: 13px; 
+            text-transform: uppercase; letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn i { margin-right: 15px; font-size: 1.3em; }
+
+        
+        .wa-btn i { color: #25D366; }
+        .wa-btn:hover { border-color: #25D366; background-color: rgba(37, 211, 102, 0.1); color: #fff; transform: translateX(5px); }
+
+        .ig-btn i { color: #E1306C; }
+        .ig-btn:hover { border-color: #E1306C; background-color: rgba(225, 48, 108, 0.1); color: #fff; transform: translateX(5px); }
+
+        .email-btn i { color: #c00; }
+        .email-btn:hover { border-color: #c00; background-color: rgba(204, 0, 0, 0.1); color: #fff; transform: translateX(5px); }
+    </style>
+</head>
+<body>
+
+    <div id="lockdown-screen">
+        <div class="warning-header"><i class="fas fa-exclamation-triangle"></i> UNAUTHORIZED ACCESS</div>
+        <div class="warning-sub">
+            You have scanned a classified Foundation asset tag. 
+            <br><br>
+            IS THIS BAG LOST OR ABANDONED?
+        </div>
+        <button class="continue-btn" id="unlock-btn">YES, INITIALIZE RECOVERY PROTOCOL</button>
+    </div>
+
+    <div id="main-content">
+        <div class="document-card">
+            
+            <div class="doc-header">
+                <h1>ASSET TAG: JSL-001</h1>
+                <p>PROPERTY OF JASON STEVAN LAY | ID/LOCATION: JKT-TIMUR</p>
+            </div>
+
+            <div class="data-field"><strong>PERSONNEL:</strong> Jason Stevan Lay</div>
+            <div class="data-field"><strong>CLEARANCE:</strong> Level 4 (Lead Researcher)</div>
+            <div class="data-field"><strong>COMM-LINK:</strong> YD0AAI (ORARI)</div>
+            
+            <p class="bio-text">
+                <strong>DIRECTIVE:</strong> IF FOUND, CONTACT THE PERSON AS LISTED:
+            </p>
+
+            <details>
+                <summary>EXPAND MEDICAL & FIELD BRIEF</summary>
+                <div class="med-content">
+                    <strong>SUBJECT MEDICAL DATA:</strong>
+                    <ul>
+                        <li><strong>Blood Type:</strong> [O]</li>
+                        <li><strong>Allergies:</strong> [-]</li>
+                        <li><strong>Medical Baseline:</strong> - </li>
+                    </ul>
+                </div>
+            </details>
+
+            <div class="social-links">
+                <a href="https://wa.me/6282110047175" class="social-btn wa-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> SECURE MESSAGE (WhatsApp)
+                </a>
+                <a href="https://instagram.com/jasoncarburator" class="social-btn ig-btn" target="_blank">
+                    <i class="fab fa-instagram"></i> VISUAL COMMS (Instagram)
+                </a>
+                <a href="mailto:tspstrelok@gmail.com" class="social-btn email-btn">
+                    <i class="fas fa-envelope"></i> DISPATCH EMAIL
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const unlockBtn = document.getElementById('unlock-btn');
+        const lockdownScreen = document.getElementById('lockdown-screen');
+        const mainContent = document.getElementById('main-content');
+
+        unlockBtn.addEventListener('click', function() {
+            
+            this.innerText = 'AUTHENTICATING...';
+            this.style.backgroundColor = '#555';
+            this.style.borderColor = '#555';
+            
+            
+            setTimeout(() => {
+                lockdownScreen.style.opacity = '0';
+                
+                
+                setTimeout(() => {
+                    lockdownScreen.style.display = 'none';
+                    mainContent.style.display = 'block';
+                    
+                    
+                    setTimeout(() => {
+                        mainContent.style.opacity = '1';
+                    }, 50);
+                }, 500);
+            }, 800);
+        });
+    </script>
+
+</body>
+</html>
