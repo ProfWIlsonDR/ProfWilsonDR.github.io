@@ -27,10 +27,20 @@
             align-items: center; min-height: 100vh; padding: 20px; overflow-y: auto;
         }
 
+        
+        #bios-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #000; color: #d4d4d4; z-index: 10000;
+            padding: 20px; font-size: 14px; display: flex; flex-direction: column;
+            justify-content: flex-start; align-items: flex-start;
+            transition: opacity 0.5s ease;
+        }
+        .bios-line { opacity: 0; margin-bottom: 4px; text-shadow: 0 0 2px #d4d4d4; }
+
         #auth-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #050505; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            z-index: 999; transition: opacity 0.5s ease, background-color 0.2s ease;
+            display: none; flex-direction: column; justify-content: center; align-items: center; 
+            z-index: 999; transition: opacity 0.5s ease, background-color 0.2s ease; opacity: 0;
         }
 
         .auth-container {
@@ -97,25 +107,16 @@
         .timeline-date { font-weight: bold; color: #c00; font-size: 12px; margin-bottom: 5px; }
         .timeline-text { font-size: 13px; color: #111; line-height: 1.5; text-align: justify; }
 
-       
-        .tactical-map-container {
-            background: #050505; border: 2px solid #111; margin: 15px; height: 280px;
-            display: flex; flex-direction: column; overflow: hidden;
-        }
+        
+        .tactical-map-container { background: #050505; border: 2px solid #111; margin: 15px; height: 280px; display: flex; flex-direction: column; overflow: hidden; }
         .iso-wrapper { flex-grow: 1; display: flex; justify-content: center; align-items: center; perspective: 800px; overflow: hidden; }
         .iso-grid {
-            width: 250px; height: 250px; background: rgba(0, 255, 0, 0.05);
-            border: 1px solid rgba(0, 255, 0, 0.3); transform: rotateX(60deg) rotateZ(-45deg);
-            position: relative; box-shadow: 0 0 30px rgba(0, 255, 0, 0.1);
-            background-image: linear-gradient(rgba(0, 255, 0, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 0, 0.2) 1px, transparent 1px);
+            width: 250px; height: 250px; background: rgba(0, 255, 0, 0.05); border: 1px solid rgba(0, 255, 0, 0.3); transform: rotateX(60deg) rotateZ(-45deg);
+            position: relative; box-shadow: 0 0 30px rgba(0, 255, 0, 0.1); background-image: linear-gradient(rgba(0, 255, 0, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 0, 0.2) 1px, transparent 1px);
             background-size: 25px 25px; transition: transform 0.5s ease;
         }
         .iso-grid:hover { transform: rotateX(50deg) rotateZ(-35deg) scale(1.1); }
-        .map-node {
-            position: absolute; width: 12px; height: 12px; background: #f00; border-radius: 50%;
-            transform: translate(-50%, -50%) rotateX(-60deg) rotateZ(45deg); cursor: crosshair;
-            box-shadow: 0 0 10px #f00; animation: pulse 1.5s infinite; transition: 0.2s;
-        }
+        .map-node { position: absolute; width: 12px; height: 12px; background: #f00; border-radius: 50%; transform: translate(-50%, -50%) rotateX(-60deg) rotateZ(45deg); cursor: crosshair; box-shadow: 0 0 10px #f00; animation: pulse 1.5s infinite; transition: 0.2s; }
         .map-node:hover { background: #fff; box-shadow: 0 0 15px #fff; transform: translate(-50%, -50%) rotateX(-60deg) rotateZ(45deg) scale(1.5); }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); } }
         .map-readout { background: #111; color: #0f0; padding: 10px; font-size: 11px; font-family: monospace; border-top: 1px solid #333; height: 40px; display: flex; align-items: center; }
@@ -138,6 +139,7 @@
         .memetic-text { background: #000; color: #f00; padding: 20px 40px; font-size: 2.5rem; border: 5px solid #f00; font-weight: bold; text-align: center; text-transform: uppercase; box-shadow: 0 0 50px #f00; }
         @keyframes spin-strobe { 0% { filter: invert(0) hue-rotate(0deg); transform: scale(1); } 50% { filter: invert(1) hue-rotate(180deg); transform: scale(1.05); } 100% { filter: invert(0) hue-rotate(360deg); transform: scale(1); } }
 
+        
         #dev-console {
             position: fixed; top: -50vh; left: 0; width: 100%; height: 40vh; background: rgba(0, 0, 0, 0.95);
             border-bottom: 2px solid #00ff00; z-index: 99999; padding: 15px; display: flex; flex-direction: column;
@@ -151,6 +153,8 @@
     </style>
 </head>
 <body>
+
+    <div id="bios-screen"></div>
 
     <div id="dev-console">
         <div id="console-output">SCP OS Kernel v4.2.19 [Root access granted]
@@ -177,7 +181,7 @@ Type 'help' for a list of available directives.
             <p style="font-size: 12px;">STATUS: <span style="color: #00ff00;">ONLINE</span></p>
             <div class="input-line">
                 <span>ENTER KEY:</span>
-                <input type="text" id="passkey" autocomplete="off" autofocus>
+                <input type="text" id="passkey" autocomplete="off">
             </div>
         </div>
     </div>
@@ -251,8 +255,56 @@ Type 'help' for a list of available directives.
     </div>
 
     <script>
-        const passkeyInput = document.getElementById('passkey');
+      
+        const biosScreen = document.getElementById('bios-screen');
         const authScreen = document.getElementById('auth-screen');
+        const passkeyInput = document.getElementById('passkey');
+        
+        const biosSequence = [
+            "SCP BIOS (C) 2026 Foundation Sector-JT",
+            "BIOS Date 03/29/26 Ver 4.2.19",
+            "CPU: Hexa-Core Metaphysical Processor, Speed: 3.4 GHz",
+            "Memory Test: 640000K OK",
+            "",
+            "Initializing Euclidean Voxel Render Engine... [OK]",
+            "Mounting Drive C: [O5-CLASSIFIED]... [OK]",
+            "Scanning for localized anomalies...",
+            "--> 1 Entity Found: 'Matjupri' (Class: Feline, Status: Dormant)",
+            "Initializing YD0AAI RF Array... [OK]",
+            "",
+            "Booting SCP Foundation Mainframe OS...",
+            "Loading Security Protocols...",
+            "SYSTEM READY."
+        ];
+
+        let delay = 0;
+        biosSequence.forEach((text, index) => {
+            setTimeout(() => {
+                const line = document.createElement('div');
+                line.className = 'bios-line';
+                line.innerText = text;
+                biosScreen.appendChild(line);
+                setTimeout(() => { line.style.opacity = '1'; }, 50);
+            }, delay);
+            
+            delay += text === "" ? 400 : Math.random() * 150 + 100; 
+        });
+
+      
+        setTimeout(() => {
+            biosScreen.style.opacity = '0';
+            setTimeout(() => {
+                biosScreen.style.display = 'none';
+                authScreen.style.display = 'flex';
+                setTimeout(() => { 
+                    authScreen.style.opacity = '1'; 
+                    passkeyInput.focus(); 
+                }, 100);
+            }, 500);
+        }, delay + 800);
+
+
+        
         const mainContent = document.getElementById('main-content');
         const o5Data = document.getElementById('o5-clearance-data');
         const stamp = document.getElementById('clearance-stamp');
@@ -278,7 +330,6 @@ Type 'help' for a list of available directives.
             if (clickCount >= 5) { memeticKill.style.display = 'flex'; }
         });
 
-      
         const collapsibles = document.querySelectorAll('.collapsible-btn');
         collapsibles.forEach(btn => {
             btn.addEventListener('click', function() {
@@ -292,14 +343,12 @@ Type 'help' for a list of available directives.
             });
         });
 
-      
         const mapNodes = document.querySelectorAll('.map-node');
         const mapReadout = document.getElementById('map-readout');
         mapNodes.forEach(node => {
             node.addEventListener('click', (e) => {
                 const info = e.target.getAttribute('data-info');
                 mapReadout.innerText = "> INTERCEPTING: " + info;
-                
                 mapReadout.style.opacity = '0.5';
                 setTimeout(() => { mapReadout.style.opacity = '1'; }, 100);
             });
