@@ -20,6 +20,22 @@
             pointer-events: none;
         }
 
+       
+        .scanline {
+            width: 100%;
+            height: 100px;
+            z-index: 9999;
+            position: fixed;
+            pointer-events: none;
+            background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(200,200,200,0.1) 50%, rgba(0,0,0,0) 100%);
+            animation: scan 6s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { top: -100px; }
+            100% { top: 100vh; }
+        }
+
         body {
             background-color: #050505;
             color: #d4d4d4;
@@ -124,7 +140,7 @@
         }
         .social-btn:hover { background-color: #111; color: #fff; }
 
-        
+      
         #site-clock {
             position: fixed; bottom: 10px; right: 10px; font-size: 10px; color: #555; letter-spacing: 1px; z-index: 1001;
         }
@@ -132,6 +148,7 @@
 </head>
 <body>
 
+    <div class="scanline"></div>
     <div id="site-clock">SITE-ID-TIME: --:--:--</div>
 
     <div id="auth-screen">
@@ -152,7 +169,7 @@
             <div class="classified-stamp" id="clearance-stamp">LEVEL 4</div>
             <div class="doc-header">
                 <h1>DR. JASON STEVAN LAY</h1>
-                <p>LEAD RESEARCHER | APPLIED METAPHYSICS</p>
+                <p>SOFTWARE ARCHITECT | SECTOR RESEARCHER</p>
             </div>
 
             <img src="https://i.ibb.co.com/mC8Gq1zx/18095880619613418.jpg" alt="Personnel Photo" class="profile-pic">
@@ -161,12 +178,11 @@
             <div class="data-field"><strong>CALLSIGN:</strong> YD0AAI</div>
             
             <p class="bio-text">
-                <strong>PROFILE:</strong> Dr. Lay's primary directive involves the excavation of subterranean networks within digital Euclidean space <span class="redacted" onclick="this.classList.add('revealed')">"The Zone" / Minecraft</span>. When not conducting tactical simulations <span class="redacted" onclick="this.classList.add('revealed')">(Airsoft)</span>, personnel operates high-frequency RF equipment to intercept atmospheric anomalies. Subject is currently under supervision by Class-A biological unit <span class="redacted" onclick="this.classList.add('revealed')">Matjupri (Grey Tabby)</span>.
+                <strong>PROFILE:</strong> Subject is a Level 4 software developer stationed at Sector Jakarta Timur. Primary competencies involve architectural coding and digital environment structuring <span class="redacted" onclick="this.classList.add('revealed')">(Game Dev)</span>. Field combat exercises are strictly limited to kinetic simulation environments <span class="redacted" onclick="this.classList.add('revealed')">(Airsoft)</span>. Subject dedicates extensive off-duty cycles to Euclidean voxel manipulation <span class="redacted" onclick="this.classList.add('revealed')">(Minecraft)</span> and HAM radio operations. Cohabitation with one (1) non-anomalous feline entity designated 'Matjupri' is authorized and monitored.
             </p>
 
             <div id="o5-clearance-data">
-                <strong>ADDENDUM [O5-COMMAND] - PSYCHOLOGICAL PROFILE:</strong> Subject exhibits an obsessive, potentially memetic fixation on simulated irradiated exclusion zones <span class="redacted" onclick="this.classList.add('revealed')">(S.T.A.L.K.E.R.)</span> and bio-organic catastrophic failure scenarios <span class="redacted" onclick="this.classList.add('revealed')">(Resident Evil)</span>. Cognitive screening is required bi-monthly.<br><br>
-                <strong>INCIDENT LOG 88-ALPHA:</strong> Strict visual observation of the Class-A biological unit <em>Matjupri</em> is mandated. Security feeds indicate the entity's green eyes frequently reflect unmapped, non-Euclidean geometries during the subject's high-frequency RF broadcasts. Personnel are advised not to initiate direct eye contact with the unit during active transmission windows.
+                <strong>ADDENDUM [O5-COMMAND] - PSYCHOLOGICAL PROFILE:</strong> Subject's private database archives contain extensive behavioral simulations regarding Class-K exclusion zones <span class="redacted" onclick="this.classList.add('revealed')">(S.T.A.L.K.E.R.)</span> and localized bio-hazard outbreaks <span class="redacted" onclick="this.classList.add('revealed')">(Resident Evil)</span>. While currently benign, Command mandates routine screening to ensure these recreational simulations do not blur with operational reality.
             </div>
 
             <div class="social-links">
@@ -190,7 +206,6 @@
         const o5Data = document.getElementById('o5-clearance-data');
         const stamp = document.getElementById('clearance-stamp');
 
-        
         setInterval(() => {
             const now = new Date();
             document.getElementById('site-clock').innerText = "SITE-ID-TIME: " + now.toLocaleTimeString();
@@ -214,7 +229,7 @@
                         stamp.style.background = '#c00';
                     }
 
-                    
+                   
                     this.value = 'AUTHORIZATION ACCEPTED. DECRYPTING...';
                     this.disabled = true;
                     this.style.color = '#00ff00';
