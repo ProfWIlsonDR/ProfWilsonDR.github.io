@@ -8,57 +8,26 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; }
 
-        body::before {
-            content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            z-index: 1000; background-size: 100% 2px, 3px 100%; pointer-events: none;
-        }
-
-        .scanline {
-            width: 100%; height: 100px; z-index: 9999; position: fixed; pointer-events: none;
-            background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(200,200,200,0.1) 50%, rgba(0,0,0,0) 100%);
-            animation: scan 6s linear infinite;
-        }
-
+        body::before { content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); z-index: 1000; background-size: 100% 2px, 3px 100%; pointer-events: none; }
+        .scanline { width: 100%; height: 100px; z-index: 9999; position: fixed; pointer-events: none; background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(200,200,200,0.1) 50%, rgba(0,0,0,0) 100%); animation: scan 6s linear infinite; }
         @keyframes scan { 0% { top: -100px; } 100% { top: 100vh; } }
 
-        body {
-            background-color: #050505; color: #d4d4d4; display: flex; justify-content: center; 
-            align-items: center; min-height: 100vh; padding: 20px; overflow-y: auto;
-        }
+        body { background-color: #050505; color: #d4d4d4; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; overflow-y: auto; }
 
-        
-        #bios-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #000; color: #d4d4d4; z-index: 10000;
-            padding: 20px; font-size: 14px; display: flex; flex-direction: column;
-            justify-content: flex-start; align-items: flex-start;
-            transition: opacity 0.5s ease;
-        }
+        #bios-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000; color: #d4d4d4; z-index: 10000; padding: 20px; font-size: 14px; display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; transition: opacity 0.5s ease; }
         .bios-line { opacity: 0; margin-bottom: 4px; text-shadow: 0 0 2px #d4d4d4; }
 
-        #auth-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #050505; 
-            display: none; flex-direction: column; justify-content: center; align-items: center; 
-            z-index: 999; transition: opacity 0.5s ease, background-color 0.2s ease; opacity: 0;
-        }
-
-        .auth-container {
-            width: 90%; max-width: 600px; border: 1px solid #333; padding: 30px;
-            background: #0a0a0a; box-shadow: 0 0 15px rgba(255, 0, 0, 0.1); animation: flicker 0.15s infinite;
-        }
-
+        #auth-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #050505; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 999; transition: opacity 0.5s ease, background-color 0.2s ease; opacity: 0; }
+        .auth-container { width: 90%; max-width: 600px; border: 1px solid #333; padding: 30px; background: #0a0a0a; box-shadow: 0 0 15px rgba(255, 0, 0, 0.1); animation: flicker 0.15s infinite; }
         @keyframes flicker { 0% { opacity: 0.97; } 50% { opacity: 1; } 100% { opacity: 0.98; } }
 
         .scp-logo-text { text-align: center; font-weight: bold; font-size: 20px; margin-bottom: 20px; letter-spacing: 2px; color: #fff; }
         .warning-text { color: #ff3333; font-weight: bold; text-align: center; margin-bottom: 30px; text-transform: uppercase; }
         .input-line { display: flex; align-items: center; margin-top: 20px; border-top: 1px solid #333; padding-top: 20px; }
         .input-line span { color: #ff3333; margin-right: 10px; font-weight: bold;}
-        
         input[type="text"] { background: transparent; border: none; color: #fff; font-size: 16px; width: 100%; outline: none; text-transform: uppercase; font-family: 'Courier New', Courier, monospace; }
 
-        #main-content { display: none; opacity: 0; transition: opacity 1s ease; width: 100%; max-width: 500px; padding-bottom: 50px; }
-
+        #main-content { display: none; opacity: 0; transition: opacity 1s ease; width: 100%; max-width: 500px; padding-bottom: 80px; }
         .document-card { background-color: #e5e5e5; color: #111; border: 2px solid #111; padding: 30px; position: relative; box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); }
         .doc-header { border-bottom: 3px double #111; padding-bottom: 15px; margin-bottom: 20px; text-align: center; }
         .doc-header h1 { font-size: 22px; text-transform: uppercase; letter-spacing: 2px;}
@@ -72,34 +41,25 @@
 
         .redacted { background-color: #111; color: #111; padding: 0 5px; cursor: pointer; transition: background 0.3s; user-select: none; }
         .redacted:hover { background-color: #444; }
-
-        @keyframes digital-glitch {
-            0% { background-color: #111; color: #111; transform: translate(0); }
-            20% { background-color: #c00; color: #fff; transform: translate(-2px, 1px); }
-            40% { background-color: #fff; color: #000; transform: translate(2px, -1px); }
-            60% { background-color: #111; color: #111; transform: translate(-1px, 2px); }
-            80% { background-color: #c00; color: #fff; transform: translate(1px, -2px); }
-            100% { background-color: transparent; color: inherit; transform: translate(0); }
-        }
+        @keyframes digital-glitch { 0% { background-color: #111; color: #111; transform: translate(0); } 20% { background-color: #c00; color: #fff; transform: translate(-2px, 1px); } 40% { background-color: #fff; color: #000; transform: translate(2px, -1px); } 60% { background-color: #111; color: #111; transform: translate(-1px, 2px); } 80% { background-color: #c00; color: #fff; transform: translate(1px, -2px); } 100% { background-color: transparent; color: inherit; transform: translate(0); } }
         .redacted.revealed { animation: digital-glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; cursor: default; }
 
-        
-        .collapsible-btn {
-            background-color: #111; color: #fff; cursor: pointer; padding: 12px; width: 100%;
-            border: 2px solid #111; text-align: left; outline: none; font-size: 14px;
-            font-weight: bold; margin-top: 10px; transition: 0.3s; text-transform: uppercase;
-            font-family: 'Courier New', Courier, monospace;
-        }
+        .collapsible-btn { background-color: #111; color: #fff; cursor: pointer; padding: 12px; width: 100%; border: 2px solid #111; text-align: left; outline: none; font-size: 14px; font-weight: bold; margin-top: 10px; transition: 0.3s; text-transform: uppercase; font-family: 'Courier New', Courier, monospace; }
         .collapsible-btn:hover, .collapsible-btn.active { background-color: #c00; color: #fff; border-color: #c00; }
         .collapsible-btn::after { content: '[+]'; float: right; color: inherit; }
         .collapsible-btn.active::after { content: '[-]'; }
+        .timeline-wrapper { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; background: #d9d9d9; border-left: 2px solid #111; border-right: 2px solid #111; border-bottom: 2px solid #111; margin-top: -2px; }
 
-        .timeline-wrapper {
-            max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out;
-            background: #d9d9d9; border-left: 2px solid #111; border-right: 2px solid #111; border-bottom: 2px solid #111;
-            margin-top: -2px;
-        }
-        
+      
+        .access-log { padding: 15px; font-family: monospace; font-size: 11px; background: #0a0a0a; color: #0f0; height: 150px; overflow-y: auto; border-top: 1px solid #333; }
+        .log-entry { margin-bottom: 5px; border-bottom: 1px dashed #333; padding-bottom: 5px; }
+        .log-time { color: #888; }
+        .log-device { color: #fff; }
+        .log-clearance { font-weight: bold; }
+        .clearance-D { color: #ff5555; }
+        .clearance-L1 { color: #ffaa00; }
+        .clearance-L4 { color: #00ff00; }
+
         .timeline { border-left: 2px dashed #111; margin: 20px 20px 20px 30px; padding-left: 15px; }
         .timeline-item { margin-bottom: 20px; position: relative; }
         .timeline-item:last-child { margin-bottom: 0; }
@@ -107,14 +67,9 @@
         .timeline-date { font-weight: bold; color: #c00; font-size: 12px; margin-bottom: 5px; }
         .timeline-text { font-size: 13px; color: #111; line-height: 1.5; text-align: justify; }
 
-        
         .tactical-map-container { background: #050505; border: 2px solid #111; margin: 15px; height: 280px; display: flex; flex-direction: column; overflow: hidden; }
         .iso-wrapper { flex-grow: 1; display: flex; justify-content: center; align-items: center; perspective: 800px; overflow: hidden; }
-        .iso-grid {
-            width: 250px; height: 250px; background: rgba(0, 255, 0, 0.05); border: 1px solid rgba(0, 255, 0, 0.3); transform: rotateX(60deg) rotateZ(-45deg);
-            position: relative; box-shadow: 0 0 30px rgba(0, 255, 0, 0.1); background-image: linear-gradient(rgba(0, 255, 0, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 0, 0.2) 1px, transparent 1px);
-            background-size: 25px 25px; transition: transform 0.5s ease;
-        }
+        .iso-grid { width: 250px; height: 250px; background: rgba(0, 255, 0, 0.05); border: 1px solid rgba(0, 255, 0, 0.3); transform: rotateX(60deg) rotateZ(-45deg); position: relative; box-shadow: 0 0 30px rgba(0, 255, 0, 0.1); background-image: linear-gradient(rgba(0, 255, 0, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 0, 0.2) 1px, transparent 1px); background-size: 25px 25px; transition: transform 0.5s ease; }
         .iso-grid:hover { transform: rotateX(50deg) rotateZ(-35deg) scale(1.1); }
         .map-node { position: absolute; width: 12px; height: 12px; background: #f00; border-radius: 50%; transform: translate(-50%, -50%) rotateX(-60deg) rotateZ(45deg); cursor: crosshair; box-shadow: 0 0 10px #f00; animation: pulse 1.5s infinite; transition: 0.2s; }
         .map-node:hover { background: #fff; box-shadow: 0 0 15px #fff; transform: translate(-50%, -50%) rotateX(-60deg) rotateZ(45deg) scale(1.5); }
@@ -125,26 +80,19 @@
         #o5-clearance-data strong { color: #c00; }
 
         .social-links { display: flex; flex-direction: column; gap: 10px; margin-top: 25px; border-top: 1px dashed #111; padding-top: 20px; }
-        .social-btn { display: flex; align-items: center; background-color: #fff; color: #111; text-decoration: none; padding: 12px; border: 1px solid #111; font-weight: bold; font-size: 13px; text-transform: uppercase; transition: all 0.2s ease; }
+        .social-btn { display: flex; align-items: center; background-color: #fff; color: #111; text-decoration: none; padding: 12px; border: 1px solid #111; font-weight: bold; font-size: 13px; text-transform: uppercase; transition: all 0.2s ease; cursor: pointer;}
         .social-btn:hover { background-color: #111; color: #fff; }
-        #site-clock { position: fixed; bottom: 10px; right: 10px; font-size: 10px; color: #555; letter-spacing: 1px; z-index: 1001; }
-
         
-        #memetic-kill {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: repeating-radial-gradient(circle, #000, #000 15px, #fff 15px, #fff 30px);
-            z-index: 10000; justify-content: center; align-items: center; flex-direction: column;
-            animation: spin-strobe 0.15s linear infinite;
-        }
+        
+        #sanity-container { position: fixed; bottom: 0; left: 0; width: 100%; height: 6px; background: #111; z-index: 1000; }
+        #sanity-bar { height: 100%; width: 100%; background: #0f0; transition: width 1s linear, background 0.5s ease; }
+        #site-clock { position: fixed; bottom: 12px; right: 10px; font-size: 10px; color: #555; letter-spacing: 1px; z-index: 1001; }
+
+        #memetic-kill { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: repeating-radial-gradient(circle, #000, #000 15px, #fff 15px, #fff 30px); z-index: 10000; justify-content: center; align-items: center; flex-direction: column; animation: spin-strobe 0.15s linear infinite; }
         .memetic-text { background: #000; color: #f00; padding: 20px 40px; font-size: 2.5rem; border: 5px solid #f00; font-weight: bold; text-align: center; text-transform: uppercase; box-shadow: 0 0 50px #f00; }
         @keyframes spin-strobe { 0% { filter: invert(0) hue-rotate(0deg); transform: scale(1); } 50% { filter: invert(1) hue-rotate(180deg); transform: scale(1.05); } 100% { filter: invert(0) hue-rotate(360deg); transform: scale(1); } }
 
-        
-        #dev-console {
-            position: fixed; top: -50vh; left: 0; width: 100%; height: 40vh; background: rgba(0, 0, 0, 0.95);
-            border-bottom: 2px solid #00ff00; z-index: 99999; padding: 15px; display: flex; flex-direction: column;
-            transition: top 0.3s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 10px 30px rgba(0,255,0,0.1);
-        }
+        #dev-console { position: fixed; top: -50vh; left: 0; width: 100%; height: 40vh; background: rgba(0, 0, 0, 0.95); border-bottom: 2px solid #00ff00; z-index: 99999; padding: 15px; display: flex; flex-direction: column; transition: top 0.3s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 10px 30px rgba(0,255,0,0.1); }
         #dev-console.active { top: 0; }
         #console-output { flex-grow: 1; overflow-y: auto; color: #00ff00; font-size: 12px; margin-bottom: 10px; white-space: pre-wrap; word-wrap: break-word; }
         .console-input-wrapper { display: flex; align-items: center; border-top: 1px dashed #333; padding-top: 10px; }
@@ -171,6 +119,7 @@ Type 'help' for a list of available directives.
     </div>
 
     <div class="scanline"></div>
+    <div id="sanity-container"><div id="sanity-bar"></div></div>
     <div id="site-clock">SITE-ID-TIME: --:--:--</div>
 
     <div id="auth-screen">
@@ -202,6 +151,12 @@ Type 'help' for a list of available directives.
             <p class="bio-text">
                 <strong>PROFILE:</strong> Subject is a Level 4 software developer stationed at Sector Jakarta Timur. Primary competencies involve architectural coding and digital environment structuring <span class="redacted" onclick="this.classList.add('revealed')">(Game Dev)</span>. Field combat exercises are strictly limited to kinetic simulation environments <span class="redacted" onclick="this.classList.add('revealed')">(Airsoft)</span>. Subject dedicates extensive off-duty cycles to Euclidean voxel manipulation <span class="redacted" onclick="this.classList.add('revealed')">(Minecraft)</span> and HAM radio operations. Cohabitation with one (1) non-anomalous feline entity designated 'Matjupri' is authorized and monitored.
             </p>
+
+            <button class="collapsible-btn">VIEW TERMINAL ACCESS LOG</button>
+            <div class="timeline-wrapper">
+                <div class="access-log" id="access-log-container">
+                    </div>
+            </div>
 
             <button class="collapsible-btn">EXPAND CHRONOLOGICAL LOG</button>
             <div class="timeline-wrapper">
@@ -247,85 +202,140 @@ Type 'help' for a list of available directives.
                 <a href="https://instagram.com/jasoncarburator" class="social-btn" target="_blank">
                     <i class="fab fa-instagram"></i> [VIEW INSTAGRAM SURVEILLANCE]
                 </a>
-                <a href="mailto:tspstrelok@gmail.com" class="social-btn">
-                    <i class="fas fa-envelope"></i> [INITIATE COMM LINK]
+                <a class="social-btn" id="morse-btn">
+                    <i class="fas fa-satellite-dish"></i> [INITIATE YD0AAI RF PING]
                 </a>
             </div>
         </div>
     </div>
 
     <script>
-      
+        
         const biosScreen = document.getElementById('bios-screen');
         const authScreen = document.getElementById('auth-screen');
         const passkeyInput = document.getElementById('passkey');
         
         const biosSequence = [
-            "SCP BIOS (C) 2026 Foundation Sector-JT",
-            "BIOS Date 03/29/26 Ver 4.2.19",
-            "CPU: Hexa-Core Metaphysical Processor, Speed: 3.4 GHz",
-            "Memory Test: 640000K OK",
-            "",
-            "Initializing Euclidean Voxel Render Engine... [OK]",
-            "Mounting Drive C: [O5-CLASSIFIED]... [OK]",
-            "Scanning for localized anomalies...",
-            "--> 1 Entity Found: 'Matjupri' (Class: Feline, Status: Dormant)",
-            "Initializing YD0AAI RF Array... [OK]",
-            "",
-            "Booting SCP Foundation Mainframe OS...",
-            "Loading Security Protocols...",
-            "SYSTEM READY."
+            "SCP BIOS (C) 2026 Foundation Sector-JT", "BIOS Date 03/29/26 Ver 4.2.19", "CPU: Hexa-Core Metaphysical Processor", "Memory Test: 640000K OK", "",
+            "Initializing Euclidean Voxel Render Engine... [OK]", "Mounting Drive C: [O5-CLASSIFIED]... [OK]", "Scanning for localized anomalies...",
+            "--> 1 Entity Found: 'Matjupri' (Class: Feline, Status: Dormant)", "Initializing YD0AAI RF Array... [OK]", "", "SYSTEM READY."
         ];
 
         let delay = 0;
         biosSequence.forEach((text, index) => {
             setTimeout(() => {
-                const line = document.createElement('div');
-                line.className = 'bios-line';
-                line.innerText = text;
-                biosScreen.appendChild(line);
-                setTimeout(() => { line.style.opacity = '1'; }, 50);
+                const line = document.createElement('div'); line.className = 'bios-line'; line.innerText = text;
+                biosScreen.appendChild(line); setTimeout(() => { line.style.opacity = '1'; }, 50);
             }, delay);
-            
             delay += text === "" ? 400 : Math.random() * 150 + 100; 
         });
 
-      
         setTimeout(() => {
             biosScreen.style.opacity = '0';
             setTimeout(() => {
-                biosScreen.style.display = 'none';
-                authScreen.style.display = 'flex';
-                setTimeout(() => { 
-                    authScreen.style.opacity = '1'; 
-                    passkeyInput.focus(); 
-                }, 100);
+                biosScreen.style.display = 'none'; authScreen.style.display = 'flex';
+                setTimeout(() => { authScreen.style.opacity = '1'; passkeyInput.focus(); }, 100);
             }, 500);
         }, delay + 800);
 
-
-        
+       
         const mainContent = document.getElementById('main-content');
-        const o5Data = document.getElementById('o5-clearance-data');
-        const stamp = document.getElementById('clearance-stamp');
-        const profileImg = document.getElementById('profile-img');
-        const memeticKill = document.getElementById('memetic-kill');
-        
-        const devConsole = document.getElementById('dev-console');
-        const consoleInput = document.getElementById('console-input');
-        const consoleOutput = document.getElementById('console-output');
-
-        setInterval(() => {
-            const now = new Date(); document.getElementById('site-clock').innerText = "SITE-ID-TIME: " + now.toLocaleTimeString();
-        }, 1000);
-
         const docElements = document.querySelectorAll('.document-card > *');
         docElements.forEach(el => el.style.opacity = '0');
 
+        setInterval(() => { const now = new Date(); document.getElementById('site-clock').innerText = "SITE-ID-TIME: " + now.toLocaleTimeString(); }, 1000);
+
+        
+        let sanity = 100;
+        const sanityBar = document.getElementById('sanity-bar');
+        const sanityDrain = setInterval(() => {
+            if(mainContent.style.display === 'block') {
+                sanity -= 0.5;
+                sanityBar.style.width = sanity + '%';
+                if(sanity <= 50) sanityBar.style.background = '#ffaa00';
+                if(sanity <= 20) sanityBar.style.background = '#ff0000';
+                if(sanity <= 0) {
+                    clearInterval(sanityDrain);
+                    document.getElementById('memetic-kill').style.display = 'flex';
+                }
+            }
+        }, 1000);
+
+        /
+        function getDevice() {
+            const ua = navigator.userAgent;
+            if (/iPhone|iPad|iPod/i.test(ua)) return "Mobile OS [iOS Variant]";
+            if (/Android/i.test(ua)) return "Mobile OS [Android Variant]";
+            if (/Win/i.test(ua)) return "Desktop OS [Windows Variant]";
+            if (/Mac/i.test(ua)) return "Desktop OS [macOS Variant]";
+            return "Unknown Device Signature";
+        }
+        
+        const logContainer = document.getElementById('access-log-container');
+        const fakeLogs = [
+            { time: "04:12 AM", dev: "Mobile OS [Android Variant]", cl: "Class-D", c: "clearance-D" },
+            { time: "09:44 AM", dev: "Desktop OS [Windows Variant]", cl: "Level 1", c: "clearance-L1" },
+            { time: "14:22 PM", dev: "Unknown Device Signature", cl: "Level 4", c: "clearance-L4" }
+        ];
+        
+        fakeLogs.forEach(log => {
+            logContainer.innerHTML += `<div class="log-entry"><span class="log-time">[${log.time}]</span> PING: <span class="log-device">${log.dev}</span> | CLEARANCE: <span class="log-clearance ${log.c}">${log.cl}</span></div>`;
+        });
+
+        
+        const currentDevice = getDevice();
+        const clearances = ["Class-D", "Level 1", "Level 2", "Level 3"];
+        const randomClearance = clearances[Math.floor(Math.random() * clearances.length)];
+        const clearClass = randomClearance === "Class-D" ? "clearance-D" : "clearance-L1";
+        const timeNow = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        logContainer.innerHTML += `<div class="log-entry" style="background: rgba(0,255,0,0.1);"><span class="log-time">[${timeNow}]</span> PING: <span class="log-device">${currentDevice} (YOU)</span> | CLEARANCE: <span class="log-clearance ${clearClass}">${randomClearance}</span></div>`;
+
+       
+        const morseBtn = document.getElementById('morse-btn');
+        let audioCtx;
+        morseBtn.addEventListener('click', () => {
+            if(morseBtn.classList.contains('playing')) return;
+            morseBtn.classList.add('playing');
+            morseBtn.innerHTML = '<i class="fas fa-satellite-dish fa-spin"></i> [TRANSMITTING YD0AAI...]';
+            
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const morseStr = "-.-- -.. ----- .- .- .."; 
+            const dotLen = 100; 
+            let timeTracker = audioCtx.currentTime;
+
+            for(let i=0; i<morseStr.length; i++) {
+                const char = morseStr[i];
+                if(char === ' ') { timeTracker += (dotLen * 3) / 1000; continue; }
+                
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine'; osc.frequency.value = 600;
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                
+                const duration = char === '-' ? (dotLen * 3) / 1000 : dotLen / 1000;
+                
+                osc.start(timeTracker);
+                gain.gain.setValueAtTime(0.1, timeTracker);
+                timeTracker += duration;
+                gain.gain.setValueAtTime(0, timeTracker);
+                osc.stop(timeTracker);
+                
+                timeTracker += dotLen / 1000; 
+            }
+            
+            setTimeout(() => {
+                morseBtn.classList.remove('playing');
+                morseBtn.innerHTML = '<i class="fas fa-satellite-dish"></i> [INITIATE YD0AAI RF PING]';
+            }, (timeTracker - audioCtx.currentTime) * 1000 + 500);
+        });
+
+
+        
+        const profileImg = document.getElementById('profile-img');
+        const memeticKill = document.getElementById('memetic-kill');
         let clickCount = 0;
         profileImg.addEventListener('click', () => {
-            clickCount++;
-            profileImg.style.filter = "grayscale(100%) contrast(2) invert(1)";
+            clickCount++; profileImg.style.filter = "grayscale(100%) contrast(2) invert(1)";
             setTimeout(() => { profileImg.style.filter = "grayscale(100%) contrast(1.5)"; }, 150);
             if (clickCount >= 5) { memeticKill.style.display = 'flex'; }
         });
@@ -333,13 +343,9 @@ Type 'help' for a list of available directives.
         const collapsibles = document.querySelectorAll('.collapsible-btn');
         collapsibles.forEach(btn => {
             btn.addEventListener('click', function() {
-                this.classList.toggle('active');
-                const content = this.nextElementSibling;
-                if (content.style.maxHeight) {
-                    content.style.maxHeight = null;
-                } else {
-                    content.style.maxHeight = content.scrollHeight + "px";
-                }
+                this.classList.toggle('active'); const content = this.nextElementSibling;
+                if (content.style.maxHeight) { content.style.maxHeight = null; } 
+                else { content.style.maxHeight = content.scrollHeight + "px"; }
             });
         });
 
@@ -347,44 +353,35 @@ Type 'help' for a list of available directives.
         const mapReadout = document.getElementById('map-readout');
         mapNodes.forEach(node => {
             node.addEventListener('click', (e) => {
-                const info = e.target.getAttribute('data-info');
-                mapReadout.innerText = "> INTERCEPTING: " + info;
-                mapReadout.style.opacity = '0.5';
-                setTimeout(() => { mapReadout.style.opacity = '1'; }, 100);
+                mapReadout.innerText = "> INTERCEPTING: " + e.target.getAttribute('data-info');
+                mapReadout.style.opacity = '0.5'; setTimeout(() => { mapReadout.style.opacity = '1'; }, 100);
             });
         });
 
+
+        const devConsole = document.getElementById('dev-console');
+        const consoleInput = document.getElementById('console-input');
+        const consoleOutput = document.getElementById('console-output');
+
         document.addEventListener('keydown', function(e) {
             if (e.key === '`' || e.key === '~') {
-                e.preventDefault();
-                devConsole.classList.toggle('active');
-                if (devConsole.classList.contains('active')) {
-                    setTimeout(() => { consoleInput.focus(); }, 100);
-                } else {
-                    passkeyInput.focus();
-                }
+                e.preventDefault(); devConsole.classList.toggle('active');
+                if (devConsole.classList.contains('active')) { setTimeout(() => { consoleInput.focus(); }, 100); } 
+                else { passkeyInput.focus(); }
             }
         });
 
-        function printToConsole(text) {
-            consoleOutput.innerHTML += `\n> ${text}`;
-            consoleOutput.scrollTop = consoleOutput.scrollHeight;
-        }
+        function printToConsole(text) { consoleOutput.innerHTML += `\n> ${text}`; consoleOutput.scrollTop = consoleOutput.scrollHeight; }
 
         consoleInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                const cmd = this.value.trim().toLowerCase();
-                this.value = '';
-                printToConsole(cmd);
-
+                const cmd = this.value.trim().toLowerCase(); this.value = ''; printToConsole(cmd);
                 switch(cmd) {
                     case 'help': printToConsole("Commands: help, clear, ping, locate matjupri, override o5, breach, exit"); break;
                     case 'clear': consoleOutput.innerHTML = "SCP OS Kernel v4.2.19 [Root access granted]\n--------------------------------------------------"; break;
                     case 'ping': printToConsole("PONG. Server Latency: " + Math.floor(Math.random() * 50 + 10) + "ms"); break;
-                    case 'locate matjupri': printToConsole("SCANNING... Unit 'Matjupri' (Grey Tabby) located at Sector Alpha coordinates. Status: Dormant. Eye status: Green. Awaiting rations."); break;
-                    case 'override o5': 
-                        o5Data.style.display = 'block'; stamp.innerText = 'O5 ONLY'; stamp.style.color = '#fff'; stamp.style.borderColor = '#fff'; stamp.style.background = '#c00';
-                        printToConsole("SECURITY BREACH: O5 Addendum successfully decrypted."); break;
+                    case 'locate matjupri': printToConsole("SCANNING... Unit 'Matjupri' (Grey Tabby) located at Sector Alpha coordinates."); break;
+                    case 'override o5': document.getElementById('o5-clearance-data').style.display = 'block'; printToConsole("SECURITY BREACH: O5 Addendum successfully decrypted."); break;
                     case 'breach': printToConsole("CRITICAL ERROR: MEMETIC HAZARD DEPLOYED."); setTimeout(() => { memeticKill.style.display = 'flex'; devConsole.classList.remove('active'); }, 1000); break;
                     case 'exit': devConsole.classList.remove('active'); break;
                     case '': break;
@@ -398,12 +395,10 @@ Type 'help' for a list of available directives.
                 const inputVal = this.value.trim().toUpperCase();
                 if (inputVal === '') return;
 
-                if (inputVal === 'MATJUPRI') { this.value = 'WARNING: FELINE CONTAINMENT BREACH'; this.style.color = '#ff9900'; this.disabled = true; setTimeout(() => { this.value = ''; this.style.color = '#fff'; this.disabled = false; this.focus(); }, 2500); return; }
-                if (inputVal === 'STRELOK') { this.value = 'EMISSION IMMINENT. SEEK SHELTER.'; this.style.color = '#ff0000'; this.disabled = true; setTimeout(() => { this.value = ''; this.style.color = '#fff'; this.disabled = false; this.focus(); }, 2500); return; }
-                if (inputVal === 'YD0AAI') { this.value = 'INTERCEPT: -.. . .- -..'; this.style.color = '#00ffff'; this.disabled = true; setTimeout(() => { this.value = ''; this.style.color = '#fff'; this.disabled = false; this.focus(); }, 2500); return; }
-                if (inputVal === 'KETER') { this.value = 'INITIATING SITE LOCKDOWN...'; this.style.color = '#ff0000'; this.disabled = true; authScreen.style.backgroundColor = '#4a0000'; setTimeout(() => { this.value = ''; this.style.color = '#fff'; this.disabled = false; authScreen.style.backgroundColor = '#050505'; this.focus(); }, 2500); return; }
-
-                if (inputVal === 'O-5' || inputVal === 'O5') { o5Data.style.display = 'block'; stamp.innerText = 'O5 ONLY'; stamp.style.color = '#fff'; stamp.style.borderColor = '#fff'; stamp.style.background = '#c00'; }
+                if (inputVal === 'MATJUPRI') { this.value = 'WARNING: FELINE BREACH'; this.style.color = '#ff9900'; this.disabled = true; setTimeout(() => { this.value = ''; this.style.color = '#fff'; this.disabled = false; this.focus(); }, 2500); return; }
+                if (inputVal === 'STRELOK') { this.value = 'EMISSION IMMINENT.'; this.style.color = '#ff0000'; this.disabled = true; setTimeout(() => { this.value = ''; this.style.color = '#fff'; this.disabled = false; this.focus(); }, 2500); return; }
+                
+                if (inputVal === 'O-5' || inputVal === 'O5') { document.getElementById('o5-clearance-data').style.display = 'block'; document.getElementById('clearance-stamp').innerText = 'O5 ONLY'; document.getElementById('clearance-stamp').style.background = '#c00'; document.getElementById('clearance-stamp').style.color = '#fff'; }
 
                 this.value = 'AUTHORIZATION ACCEPTED. DECRYPTING...';
                 this.disabled = true; this.style.color = '#00ff00';
@@ -411,12 +406,8 @@ Type 'help' for a list of available directives.
                 setTimeout(() => {
                     authScreen.style.opacity = '0';
                     setTimeout(() => {
-                        authScreen.style.display = 'none';
-                        mainContent.style.display = 'block';
-                        mainContent.style.opacity = '1';
-                        docElements.forEach((el, index) => {
-                            setTimeout(() => { el.style.transition = 'opacity 0.1s ease-in'; el.style.opacity = '1'; }, 300 + (index * 250));
-                        });
+                        authScreen.style.display = 'none'; mainContent.style.display = 'block'; mainContent.style.opacity = '1';
+                        docElements.forEach((el, index) => { setTimeout(() => { el.style.transition = 'opacity 0.1s ease-in'; el.style.opacity = '1'; }, 300 + (index * 250)); });
                     }, 500);
                 }, 1200);
             }
